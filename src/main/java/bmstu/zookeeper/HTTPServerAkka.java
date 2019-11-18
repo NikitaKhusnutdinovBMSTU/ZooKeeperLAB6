@@ -3,7 +3,6 @@ package bmstu.zookeeper;
 import akka.NotUsed;
 import akka.actor.ActorRef;
 import akka.actor.ActorSystem;
-import akka.actor.Props;
 import akka.http.javadsl.ConnectHttp;
 import akka.http.javadsl.Http;
 import akka.http.javadsl.ServerBinding;
@@ -31,6 +30,7 @@ public class HTTPServerAkka extends AllDirectives {
 
     public static void main(String[] args) throws Exception {
 
+        System.in.read();
         ActorSystem system = ActorSystem.create(ROUTES);
         //mainActor = system.actorOf(Props.create(MainActor.class));
 
@@ -58,16 +58,16 @@ public class HTTPServerAkka extends AllDirectives {
     private Route route() {
         return concat(
                 get(
-                        () -> parameter(PACKAGE_ID, (packageId) -> {
-                                    parameter("count", (count) -> {
+                        () -> parameter(PACKAGE_ID, packageId ->
+                                    parameter("count", count -> {
                                                 Future<Object> result = Patterns.ask(mainActor,
                                                         Integer.parseInt(packageId),
                                                         TIMEOUT_MILLIS);
+                                                System.out.println(packageId + " " + count);
                                                 return completeOKWithFuture(result, Jackson.marshaller());
                                             }
 
                                     )
-                                }
                         )
                 )
         );
