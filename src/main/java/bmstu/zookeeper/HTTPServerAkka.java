@@ -70,6 +70,7 @@ public class HTTPServerAkka extends AllDirectives {
                 "127.0.0.1:2181",
                 2000,
                 event -> {
+
                     System.out.println("MAY BE IT WORKS");
                 }
         );
