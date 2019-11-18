@@ -85,7 +85,7 @@ public class HTTPServerAkka extends AllDirectives {
                         Integer.toString(parsedCount - 1)));
     }
 
-    private Route route() {
+    private Route route() throws InterruptedException{
         return concat(
                 get(
                         () -> parameter(URL, url ->
