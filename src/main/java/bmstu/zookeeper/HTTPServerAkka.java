@@ -100,9 +100,7 @@ public class HTTPServerAkka extends AllDirectives {
                                             System.out.println("COUNT->" + count);
                                             if (parsedCount != 0) {
                                                 System.out.println(url + " " + count);
-                                                return http.singleRequest(
-                                                        HttpRequest.create("http://localhost:2050/?" + "url=" + a + "&count=" +
-                                                                Integer.toString(parsedCount - 1)));
+                                                return completeOKWithFuture(fetch(url, parsedCount));
                                             } else {
                                                 return complete("HELLO BODY!");
                                             }
