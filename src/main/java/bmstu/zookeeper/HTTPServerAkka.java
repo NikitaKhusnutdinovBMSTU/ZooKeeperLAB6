@@ -27,6 +27,7 @@ import java.util.concurrent.CompletionStage;
 
 public class HTTPServerAkka extends AllDirectives {
     private static ZooKeeper zoo;
+    private static Http http;
     private static final String ROUTES = "routes";
     private static final String LOCALHOST = "localhost";
     private static final String SERVER_INFO = "Server online on localhost:8080/\n PRESS ANY KEY TO STOP";
@@ -43,7 +44,7 @@ public class HTTPServerAkka extends AllDirectives {
 
         createZoo(PORT);
 
-        final Http http = Http.get(system);
+        http = Http.get(system);
         final ActorMaterializer materializer = ActorMaterializer.create(system);
 
         HTTPServerAkka app = new HTTPServerAkka();
@@ -82,24 +83,24 @@ public class HTTPServerAkka extends AllDirectives {
     }
 
 
-
     private Route route() {
         return concat(
                 get(
                         () -> parameter(URL, url ->
-                                    parameter(COUNT, count -> {
-                                                //Future<Object> result = Patterns.ask(mainActor,
-                                                        //Integer.parseInt(packageId),
-                                                        //TIMEOUT_MILLIS);
-                                                System.out.println(url + " " + count);
-                                            CompletionStage<HttpResponse> fetch(String url) {
-                                                return http.singleRequest(HttpRequest.create(url));
+                                parameter(COUNT, count -> {
+                                            //Future<Object> result = Patterns.ask(mainActor,
+                                            //Integer.parseInt(packageId),
+                                            //TIMEOUT_MILLIS);
+                                            System.out.println(url + " " + count);
+                                            CompletionStage<HttpResponse> fetch (String url){
+                                                return http.singleRequest(HttpRequest.create("url=" + url + "&count=" + count));
                                             }
-                                                return complete("ITS OK!");
-                                                //return completeOKWithFuture(result, Jackson.marshaller());
-                                            }
+                                            //return complete("ITS OK!");
+                                            return completeOKWithFuture(fetch, Jackson.marshaller());
+                                            //return completeOKWithFuture(result, Jackson.marshaller());
+                                        }
 
-                                    )
+                                )
                         )
                 )
         );
