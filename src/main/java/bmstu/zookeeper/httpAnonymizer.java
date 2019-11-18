@@ -24,7 +24,7 @@ public class httpAnonymizer {
         );
 
         zoo.create(
-                "/servers/2181",
+                "/s",
                 "data".getBytes(),
                 ZooDefs.Ids.OPEN_ACL_UNSAFE,
                 CreateMode.EPHEMERAL_SEQUENTIAL
