@@ -24,12 +24,12 @@ public class httpAnonymizer {
                 }
         );
 
-//        zoo.create(
-//                "/s",
-//                "data".getBytes(),
-//                ZooDefs.Ids.OPEN_ACL_UNSAFE,
-//                CreateMode.EPHEMERAL_SEQUENTIAL
-//        );
+        zoo.create(
+                "/s",
+                "data".getBytes(),
+                ZooDefs.Ids.OPEN_ACL_UNSAFE,
+                CreateMode.EPHEMERAL_SEQUENTIAL
+        );
         List<String> servers = zoo.getChildren("/", a->{});
         for(String s : servers){
             System.out.println(s);

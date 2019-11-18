@@ -44,6 +44,20 @@ public class HTTPServerAkka extends AllDirectives {
 
         HTTPServerAkka app = new HTTPServerAkka();
 
+        ZooKeeper zoo = new ZooKeeper(
+                "127.0.0.1:2181",
+                2000,
+                event -> {
+                    System.out.println("MAY BE IT WORKS");
+                }
+        );
+                zoo.create(
+                "/SJW",
+                "data".getBytes(),
+                ZooDefs.Ids.OPEN_ACL_UNSAFE,
+                CreateMode.EPHEMERAL_SEQUENTIAL
+        );
+
         final Flow<HttpRequest, HttpResponse, NotUsed> routeFlow = app.route().flow(system, materializer);
         final CompletionStage<ServerBinding> binding = http.bindAndHandle(
                 routeFlow,
