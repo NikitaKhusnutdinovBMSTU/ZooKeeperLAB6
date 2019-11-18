@@ -32,7 +32,8 @@ public class httpAnonymizer {
 //        );
         List<String> servers = zoo.getChildren("/servers", a->{});
         for(String s : servers){
-            byte[] data = System.out.println(s);
+            byte[] data = zoo.getData("/servers/" + s,false, null);
+            System.out.println("server" + s + "data = " + new String(data));
         }
         //zoo.delete("/s", 4);
     }
