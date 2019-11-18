@@ -103,10 +103,6 @@ public class HTTPServerAkka extends AllDirectives {
                                             //return completeOKWithFuture(result, Jackson.marshaller());
                                         }
 
-                                );
-
-                        )
-                )
-        );
+                                ))));
     }
 }
