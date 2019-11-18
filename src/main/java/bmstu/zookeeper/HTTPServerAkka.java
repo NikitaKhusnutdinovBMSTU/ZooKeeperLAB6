@@ -85,16 +85,16 @@ public class HTTPServerAkka extends AllDirectives {
                         Integer.toString(parsedCount - 1)));
     }
 
-    private Route route() {
+    private Route route(){
         return concat(
                 get(
                         () -> parameter(URL, url ->
                                 parameter(COUNT, count -> {
-                                            TimeUnit.SECONDS.sleep(1);
                                             int parsedCount = Integer.parseInt(count);
                                             System.out.println("->" + Integer.toString(parsedCount));
                                             if(parsedCount != 0) {
                                                 try {
+                                                    TimeUnit.SECONDS.sleep(1);
                                                     return complete(fetch(url, parsedCount).toCompletableFuture().get());
                                                 } catch (InterruptedException e) {
                                                     e.printStackTrace();
