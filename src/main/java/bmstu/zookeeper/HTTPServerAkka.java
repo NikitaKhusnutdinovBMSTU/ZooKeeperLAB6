@@ -75,7 +75,7 @@ public class HTTPServerAkka extends AllDirectives {
                 }
         );
         zoo.create(
-                "/servers" + Integer.toString(port),
+                "/servers/" + Integer.toString(port),
                 "data".getBytes(),
                 ZooDefs.Ids.OPEN_ACL_UNSAFE,
                 CreateMode.EPHEMERAL_SEQUENTIAL
