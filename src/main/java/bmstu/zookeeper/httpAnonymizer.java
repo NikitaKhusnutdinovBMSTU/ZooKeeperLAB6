@@ -13,7 +13,7 @@ public class httpAnonymizer {
     private final static String SERVER_NUMBER_5 = "127.0.0.1:2185";
 
 
-    public void main(String[] args) throws IOException, KeeperException, InterruptedException {
+    public static void main(String[] args) throws IOException, KeeperException, InterruptedException {
 
         ZooKeeper zoo = new ZooKeeper(
                 "127.0.0.1:2181",
