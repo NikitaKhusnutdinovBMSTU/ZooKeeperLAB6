@@ -1,7 +1,6 @@
 package bmstu.zookeeper;
 
 import akka.NotUsed;
-import akka.actor.ActorRef;
 import akka.actor.ActorSystem;
 import akka.http.javadsl.ConnectHttp;
 import akka.http.javadsl.Http;
@@ -9,24 +8,17 @@ import akka.http.javadsl.ServerBinding;
 import akka.http.javadsl.marshallers.jackson.Jackson;
 import akka.http.javadsl.model.HttpRequest;
 import akka.http.javadsl.model.HttpResponse;
-import akka.http.javadsl.model.StatusCodes;
 import akka.http.javadsl.server.AllDirectives;
 import akka.http.javadsl.server.Route;
-import akka.pattern.Patterns;
 import akka.stream.ActorMaterializer;
 import akka.stream.javadsl.Flow;
-import akka.util.ByteString;
 import org.apache.zookeeper.CreateMode;
 import org.apache.zookeeper.KeeperException;
 import org.apache.zookeeper.ZooDefs;
 import org.apache.zookeeper.ZooKeeper;
-import scala.concurrent.Future;
-
 import java.io.IOException;
 import java.util.Scanner;
-import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CompletionStage;
-import java.util.concurrent.ExecutionException;
 
 public class HTTPServerAkka extends AllDirectives {
     private static ZooKeeper zoo;
@@ -85,7 +77,7 @@ public class HTTPServerAkka extends AllDirectives {
         );
     }
 
-    CompletionStage<HttpResponse> fetch (String a, int parsedCount){
+    CompletionStage<HttpResponse> fetch(String a, int parsedCount) {
         return http.singleRequest(
                 HttpRequest.create("http://localhost:2050/?" + "url=" + a + "&count=" +
                         Integer.toString(parsedCount - 1)));
@@ -97,13 +89,15 @@ public class HTTPServerAkka extends AllDirectives {
                         () -> parameter(URL, url ->
                                 parameter(COUNT, count -> {
                                             int parsedCount = Integer.parseInt(count);
-                                            while(parsedCount != 0) {
-                                                fetch(url, parsedCount);
+                                            if(parsedCount != 0) {
+                                                return completeOKWithFuture(fetch(url, parsedCount), Jackson.marshaller());
                                             }
-                                            return complete("HELLO BODY!");
+                                            return complete("kek?");
                                             //return completeOKWithFuture(result, Jackson.marshaller());
                                         }
-
-                                ))));
+                                )
+                        )
+                )
+        );
     }
 }
