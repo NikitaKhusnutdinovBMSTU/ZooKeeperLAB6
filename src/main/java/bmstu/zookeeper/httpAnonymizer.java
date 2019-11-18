@@ -16,7 +16,7 @@ public class httpAnonymizer {
     public static void main(String[] args) throws IOException, KeeperException, InterruptedException {
 
         ZooKeeper zoo = new ZooKeeper(
-                "127.0.0.1:2181",
+                "127.0.0.1:2182",
                 2000,
                 event -> {
                     System.out.println("MAY BE IT WORKS");
