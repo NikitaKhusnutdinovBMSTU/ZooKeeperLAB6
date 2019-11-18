@@ -16,6 +16,7 @@ import akka.stream.ActorMaterializer;
 import akka.stream.javadsl.Flow;
 import scala.concurrent.Future;
 
+import java.util.Scanner;
 import java.util.concurrent.CompletionStage;
 
 public class HTTPServerAkka extends AllDirectives {
@@ -30,7 +31,8 @@ public class HTTPServerAkka extends AllDirectives {
 
     public static void main(String[] args) throws Exception {
 
-        System.in.read();
+        Scanner in = new Scanner(System.in);
+        int PORT = in.nextInt();
         ActorSystem system = ActorSystem.create(ROUTES);
         //mainActor = system.actorOf(Props.create(MainActor.class));
 
@@ -42,7 +44,7 @@ public class HTTPServerAkka extends AllDirectives {
         final Flow<HttpRequest, HttpResponse, NotUsed> routeFlow = app.route().flow(system, materializer);
         final CompletionStage<ServerBinding> binding = http.bindAndHandle(
                 routeFlow,
-                ConnectHttp.toHost(LOCALHOST, SERVER_PORT),
+                ConnectHttp.toHost(LOCALHOST, PORT),
                 materializer
         );
 
