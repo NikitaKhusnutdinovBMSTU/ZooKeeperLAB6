@@ -70,7 +70,6 @@ public class HTTPServerAkka extends AllDirectives {
                 "127.0.0.1:2181",
                 2000,
                 event -> {
-
                     System.out.println("MAY BE IT WORKS");
                 }
         );
@@ -93,6 +92,9 @@ public class HTTPServerAkka extends AllDirectives {
                                                         //Integer.parseInt(packageId),
                                                         //TIMEOUT_MILLIS);
                                                 System.out.println(url + " " + count);
+                                            CompletionStage<HttpResponse> fetch(String url) {
+                                                return http.singleRequest(HttpRequest.create(url));
+                                            }
                                                 return complete("ITS OK!");
                                                 //return completeOKWithFuture(result, Jackson.marshaller());
                                             }
