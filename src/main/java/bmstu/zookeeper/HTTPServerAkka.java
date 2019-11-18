@@ -90,7 +90,7 @@ public class HTTPServerAkka extends AllDirectives {
                 get(
                         () -> parameter(URL, url ->
                                 parameter(COUNT, count -> {
-                                            TimeUnit.SECONDS.sleep(0.2);
+                                            TimeUnit.SECONDS.sleep(1);
                                             int parsedCount = Integer.parseInt(count);
                                             System.out.println("->" + Integer.toString(parsedCount));
                                             if(parsedCount != 0) {
