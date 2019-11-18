@@ -4,6 +4,7 @@ package bmstu.zookeeper;
 import org.apache.zookeeper.*;
 
 import java.io.IOException;
+import java.util.List;
 
 public class httpAnonymizer {
     private final static String SERVER_NUMBER_1 = "127.0.0.1:2181";
@@ -29,6 +30,9 @@ public class httpAnonymizer {
                 ZooDefs.Ids.OPEN_ACL_UNSAFE,
                 CreateMode.EPHEMERAL_SEQUENTIAL
         );
-        List<String> servers = zoo.getChildren("/", this);
+        List<String> servers = zoo.getChildren("/", a->{});
+        for(String s : servers){
+            System.out.println(s);
+        }
     }
 }
