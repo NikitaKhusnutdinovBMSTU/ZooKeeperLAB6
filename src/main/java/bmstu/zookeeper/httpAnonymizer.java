@@ -28,7 +28,7 @@ public class httpAnonymizer {
                 "/servers",
                 "data".getBytes(),
                 ZooDefs.Ids.OPEN_ACL_UNSAFE,
-                CreateMode.EPHEMERAL_SEQUENTIAL
+                CreateMode.PERSISTENT
         );
         List<String> servers = zoo.getChildren("/", a->{});
         for(String s : servers){
