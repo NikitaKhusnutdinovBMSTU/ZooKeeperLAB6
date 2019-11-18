@@ -28,9 +28,9 @@ public class HTTPServerAkka extends AllDirectives {
     private static final String ROUTES = "routes";
     private static final String LOCALHOST = "localhost";
     private static final String SERVER_INFO = "Server online on localhost:8080/\n PRESS ANY KEY TO STOP";
-    private static final String PACKAGE_ID = "packageId";
+    private static final String URL = "url";
     private static final String POST_MESSAGE = "Message was posted";
-    private static final int SERVER_PORT = 8080;
+    private static final String COUNT = "count";
     private static final int TIMEOUT_MILLIS = 5000;
 
     public static void main(String[] args) throws Exception {
@@ -64,12 +64,12 @@ public class HTTPServerAkka extends AllDirectives {
     private Route route() {
         return concat(
                 get(
-                        () -> parameter(PACKAGE_ID, packageId ->
+                        () -> parameter(URL, url ->
                                     parameter("count", count -> {
                                                 //Future<Object> result = Patterns.ask(mainActor,
                                                         //Integer.parseInt(packageId),
                                                         //TIMEOUT_MILLIS);
-                                                System.out.println(packageId + " " + count);
+                                                System.out.println(url + " " + count);
                                                 return complete("ITS OK!");
                                                 //return completeOKWithFuture(result, Jackson.marshaller());
                                             }
