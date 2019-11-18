@@ -15,6 +15,7 @@ import akka.http.javadsl.server.Route;
 import akka.pattern.Patterns;
 import akka.stream.ActorMaterializer;
 import akka.stream.javadsl.Flow;
+import akka.util.ByteString;
 import org.apache.zookeeper.CreateMode;
 import org.apache.zookeeper.KeeperException;
 import org.apache.zookeeper.ZooDefs;
@@ -25,6 +26,7 @@ import java.io.IOException;
 import java.util.Scanner;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CompletionStage;
+import java.util.concurrent.ExecutionException;
 
 public class HTTPServerAkka extends AllDirectives {
     private static ZooKeeper zoo;
@@ -98,7 +100,14 @@ public class HTTPServerAkka extends AllDirectives {
                                             System.out.println("COUNT->" + count);
                                             if (parsedCount != 0) {
                                                 System.out.println(url + " " + count);
-                                                fetch(url, parsedCount);
+                                                CompletionStage<HttpResponse> answer = fetch(url, parsedCount);
+                                                try {
+                                                    return complete(answer.toCompletableFuture().get());
+                                                } catch (InterruptedException e) {
+                                                    e.printStackTrace();
+                                                } catch (ExecutionException e) {
+                                                    e.printStackTrace();
+                                                }
                                             } else {
                                                 return complete("HELLO BODY!");
                                             }
