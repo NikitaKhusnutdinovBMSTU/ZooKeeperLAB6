@@ -89,24 +89,16 @@ public class HTTPServerAkka extends AllDirectives {
         return concat(
                 get(
                         () -> parameter(URL, url ->
-                                {
-                                    return parameter(COUNT, count -> {
-                                                int parsedCount = Integer.parseInt(count);
-                                                if (parsedCount == 0)
-                                                    return complete(")");
-                                                System.out.println("->" + Integer.toString(parsedCount));
-                                        try {
+                                parameter(COUNT, count -> {
+                                            int parsedCount = Integer.parseInt(count);
+                                            if(parsedCount == 0)
+                                                return complete(")");
+                                            System.out.println("->" + Integer.toString(parsedCount));
                                             return complete(fetch(url, parsedCount).toCompletableFuture().get());
-                                        } catch (InterruptedException e) {
-                                            e.printStackTrace();
-                                        } catch (ExecutionException e) {
-                                            e.printStackTrace();
-                                        }
 
-                                        //return completeOKWithFuture(result, Jackson.marshaller());
-                                            }
-                                    );
-                                }
+                                            //return completeOKWithFuture(result, Jackson.marshaller());
+                                        }
+                                )
                         )
                 )
         );
