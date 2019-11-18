@@ -101,13 +101,7 @@ public class HTTPServerAkka extends AllDirectives {
                                             if (parsedCount != 0) {
                                                 System.out.println(url + " " + count);
                                                 CompletionStage<HttpResponse> answer = fetch(url, parsedCount);
-                                                try {
-                                                    return complete(answer.toCompletableFuture().get());
-                                                } catch (InterruptedException e) {
-                                                    e.printStackTrace();
-                                                } catch (ExecutionException e) {
-                                                    e.printStackTrace();
-                                                }
+                                                return complete("KEK");
                                             } else {
                                                 return complete("HELLO BODY!");
                                             }
