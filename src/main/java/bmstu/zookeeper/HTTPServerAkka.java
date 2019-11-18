@@ -84,7 +84,7 @@ public class HTTPServerAkka extends AllDirectives {
 
     CompletionStage<HttpResponse> fetch (String a, int parsedCount){
         return http.singleRequest(
-                HttpRequest.create("url=" + a + "&count=" +
+                HttpRequest.create("localhost:2050/" + url=" + a + "&count=" +
                         Integer.toString(parsedCount - 1)));
     }
 
