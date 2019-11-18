@@ -20,6 +20,7 @@ import org.apache.zookeeper.ZooKeeper;
 import scala.concurrent.Future;
 
 import java.util.Scanner;
+import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CompletionStage;
 
 public class HTTPServerAkka extends AllDirectives {
@@ -65,11 +66,12 @@ public class HTTPServerAkka extends AllDirectives {
                 get(
                         () -> parameter(PACKAGE_ID, packageId ->
                                     parameter("count", count -> {
-                                                Future<Object> result = Patterns.ask(mainActor,
+                                                //Future<Object> result = Patterns.ask(mainActor,
                                                         Integer.parseInt(packageId),
                                                         TIMEOUT_MILLIS);
                                                 System.out.println(packageId + " " + count);
-                                                return completeOKWithFuture(result, Jackson.marshaller());
+                                                return ("ITS OK!");
+                                                //return completeOKWithFuture(result, Jackson.marshaller());
                                             }
 
                                     )
