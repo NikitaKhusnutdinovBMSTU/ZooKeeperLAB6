@@ -82,30 +82,29 @@ public class HTTPServerAkka extends AllDirectives {
         );
     }
 
+    CompletionStage<HttpResponse> fetch (String a, int parsedCount){
+        return http.singleRequest(
+                HttpRequest.create("url=" + a + "&count=" +
+                        Integer.toString(parsedCount - 1)));
+    }
 
     private Route route() {
         return concat(
                 get(
                         () -> parameter(URL, url ->
-                                {
-                                    return parameter(COUNT, count -> {
-                                                int parsedCount = Integer.parseInt(count);
-                                                if (parsedCount != 0) {
-                                                    System.out.println(url + " " + count);
-                                                    CompletionStage<HttpResponse> fetch (String url){
-                                                        return http.singleRequest(
-                                                                HttpRequest.create("url=" + url + "&count=" +
-                                                                        Integer.toString(parsedCount - 1)));
-                                                    }
-                                                    return completeOKWithFuture(fetch, Jackson.marshaller());
-                                                } else {
-                                                    return complete("HELLO BODY!");
-                                                }
-                                                //return completeOKWithFuture(result, Jackson.marshaller());
+                                parameter(COUNT, count -> {
+                                            int parsedCount = Integer.parseInt(count);
+                                            if (parsedCount != 0) {
+                                                System.out.println(url + " " + count);
+                                                return completeOKWithFuture(fetch(url, parsedCount), Jackson.marshaller());
+                                            } else {
+                                                return complete("HELLO BODY!");
                                             }
+                                            //return completeOKWithFuture(result, Jackson.marshaller());
+                                        }
 
-                                    );
-                                }
+                                );
+
                         )
                 )
         );
