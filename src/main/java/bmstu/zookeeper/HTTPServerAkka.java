@@ -88,15 +88,16 @@ public class HTTPServerAkka extends AllDirectives {
                 get(
                         () -> parameter(URL, url ->
                                 parameter(COUNT, count -> {
-                                            //Future<Object> result = Patterns.ask(mainActor,
-                                            //Integer.parseInt(packageId),
-                                            //TIMEOUT_MILLIS);
-                                            System.out.println(url + " " + count);
-                                            CompletionStage<HttpResponse> fetch (String url){
-                                                return http.singleRequest(HttpRequest.create("url=" + url + "&count=" + count));
+                                            int parsedCount = Integer.parseInt(count);
+                                            if(parsedCount != 0){
+                                                System.out.println(url + " " + count);
+                                                CompletionStage<HttpResponse> fetch (String url){
+                                                    return http.singleRequest(HttpRequest.create("url=" + url + "&count=" + Integer.toString(parsedCount - 1)));
+                                                }
+                                                return completeOKWithFuture(fetch, Jackson.marshaller());
+                                            }else{
+                                                return complete("HELLO BODY!");
                                             }
-                                            //return complete("ITS OK!");
-                                            return completeOKWithFuture(fetch, Jackson.marshaller());
                                             //return completeOKWithFuture(result, Jackson.marshaller());
                                         }
 
