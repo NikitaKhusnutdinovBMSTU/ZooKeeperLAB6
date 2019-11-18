@@ -93,7 +93,7 @@ public class HTTPServerAkka extends AllDirectives {
                                             System.out.println("->" + Integer.toString(parsedCount));
                                             if(parsedCount != 0) {
                                                 try {
-                                                    return complete(fetch(url, parsedCount).toCompletableFuture().get().withEntity(":)"));
+                                                    return complete(fetch(url, parsedCount).toCompletableFuture().get());
                                                 } catch (InterruptedException e) {
                                                     e.printStackTrace();
                                                 } catch (ExecutionException e) {
