@@ -97,7 +97,7 @@ public class HTTPServerAkka extends AllDirectives {
                                             System.out.println("COUNT->" + count);
                                             if (parsedCount != 0) {
                                                 System.out.println(url + " " + count);
-                                                return complete(HttpResponse.create().status());
+                                                return complete(StatusCodes.OK);
                                             } else {
                                                 return complete("HELLO BODY!");
                                             }
