@@ -39,21 +39,6 @@ public class HTTPServerAkka extends AllDirectives {
         ActorSystem system = ActorSystem.create(ROUTES);
         //mainActor = system.actorOf(Props.create(MainActor.class));
 
-        ZooKeeper zoo = new ZooKeeper(
-                "127.0.0.1:2181",
-                2000,
-                event -> {
-                    System.out.println("MAY BE IT WORKS");
-                }
-        );
-
-        zoo.create(
-                "/s/a",
-                "data".getBytes(),
-                ZooDefs.Ids.OPEN_ACL_UNSAFE,
-                CreateMode.EPHEMERAL_SEQUENTIAL
-        );
-
         final Http http = Http.get(system);
         final ActorMaterializer materializer = ActorMaterializer.create(system);
 
