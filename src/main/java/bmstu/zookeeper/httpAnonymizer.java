@@ -1,5 +1,6 @@
 package bmstu.zookeeper;
 
-public class ZooKeeper {
+public class httpAnonymizer {
     
+
 }
