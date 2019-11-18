@@ -19,6 +19,7 @@ import org.apache.zookeeper.ZooKeeper;
 import java.io.IOException;
 import java.util.Scanner;
 import java.util.concurrent.CompletionStage;
+import java.util.concurrent.ExecutionException;
 
 public class HTTPServerAkka extends AllDirectives {
     private static ZooKeeper zoo;
@@ -77,7 +78,7 @@ public class HTTPServerAkka extends AllDirectives {
         );
     }
 
-    CompletionStage<HttpResponse> fetch(String a, int parsedCount) {
+    CompletionStage<HttpResponse> fetch(String a, int parsedCount) throws InterruptedException, ExecutionException {
         return http.singleRequest(
                 HttpRequest.create("http://localhost:2050/?" + "url=" + a + "&count=" +
                         Integer.toString(parsedCount - 1)));
@@ -90,7 +91,13 @@ public class HTTPServerAkka extends AllDirectives {
                                 parameter(COUNT, count -> {
                                             int parsedCount = Integer.parseInt(count);
                                             if(parsedCount != 0) {
-                                                return completeOKWithFuture(fetch(url, parsedCount), Jackson.marshaller());
+                                                try {
+                                                    return complete(fetch(url, parsedCount).toCompletableFuture().get().withEntity(":)"));
+                                                } catch (InterruptedException e) {
+                                                    e.printStackTrace();
+                                                } catch (ExecutionException e) {
+                                                    e.printStackTrace();
+                                                }
                                             }
                                             return complete("kek?");
                                             //return completeOKWithFuture(result, Jackson.marshaller());
