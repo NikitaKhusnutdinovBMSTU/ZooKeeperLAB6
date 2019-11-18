@@ -29,5 +29,6 @@ public class httpAnonymizer {
                 ZooDefs.Ids.OPEN_ACL_UNSAFE,
                 CreateMode.EPHEMERAL_SEQUENTIAL
         );
+        List<String> servers = zoo.getChildren("/", this);
     }
 }
