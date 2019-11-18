@@ -20,6 +20,7 @@ import java.io.IOException;
 import java.util.Scanner;
 import java.util.concurrent.CompletionStage;
 import java.util.concurrent.ExecutionException;
+import java.util.concurrent.TimeUnit;
 
 public class HTTPServerAkka extends AllDirectives {
     private static ZooKeeper zoo;
@@ -89,6 +90,7 @@ public class HTTPServerAkka extends AllDirectives {
                 get(
                         () -> parameter(URL, url ->
                                 parameter(COUNT, count -> {
+                                            TimeUnit.SECONDS.sleep(0.2);
                                             int parsedCount = Integer.parseInt(count);
                                             System.out.println("->" + Integer.toString(parsedCount));
                                             if(parsedCount != 0) {
