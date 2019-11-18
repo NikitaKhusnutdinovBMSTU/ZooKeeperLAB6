@@ -14,6 +14,9 @@ import akka.http.javadsl.server.Route;
 import akka.pattern.Patterns;
 import akka.stream.ActorMaterializer;
 import akka.stream.javadsl.Flow;
+import org.apache.zookeeper.CreateMode;
+import org.apache.zookeeper.ZooDefs;
+import org.apache.zookeeper.ZooKeeper;
 import scala.concurrent.Future;
 
 import java.util.Scanner;
@@ -35,6 +38,21 @@ public class HTTPServerAkka extends AllDirectives {
         int PORT = in.nextInt();
         ActorSystem system = ActorSystem.create(ROUTES);
         //mainActor = system.actorOf(Props.create(MainActor.class));
+
+        ZooKeeper zoo = new ZooKeeper(
+                "127.0.0.1:2181",
+                2000,
+                event -> {
+                    System.out.println("MAY BE IT WORKS");
+                }
+        );
+
+        zoo.create(
+                "/s/a",
+                "data".getBytes(),
+                ZooDefs.Ids.OPEN_ACL_UNSAFE,
+                CreateMode.EPHEMERAL_SEQUENTIAL
+        );
 
         final Http http = Http.get(system);
         final ActorMaterializer materializer = ActorMaterializer.create(system);
