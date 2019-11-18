@@ -15,16 +15,18 @@ import akka.pattern.Patterns;
 import akka.stream.ActorMaterializer;
 import akka.stream.javadsl.Flow;
 import org.apache.zookeeper.CreateMode;
+import org.apache.zookeeper.KeeperException;
 import org.apache.zookeeper.ZooDefs;
 import org.apache.zookeeper.ZooKeeper;
 import scala.concurrent.Future;
 
+import java.io.IOException;
 import java.util.Scanner;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CompletionStage;
 
 public class HTTPServerAkka extends AllDirectives {
-    static ActorRef mainActor;
+    private static ZooKeeper zoo;
     private static final String ROUTES = "routes";
     private static final String LOCALHOST = "localhost";
     private static final String SERVER_INFO = "Server online on localhost:8080/\n PRESS ANY KEY TO STOP";
@@ -39,24 +41,12 @@ public class HTTPServerAkka extends AllDirectives {
         ActorSystem system = ActorSystem.create(ROUTES);
         //mainActor = system.actorOf(Props.create(MainActor.class));
 
+        createZoo(PORT);
+
         final Http http = Http.get(system);
         final ActorMaterializer materializer = ActorMaterializer.create(system);
 
         HTTPServerAkka app = new HTTPServerAkka();
-
-        ZooKeeper zoo = new ZooKeeper(
-                "127.0.0.1:2181",
-                2000,
-                event -> {
-                    System.out.println("MAY BE IT WORKS");
-                }
-        );
-                zoo.create(
-                "/SJW",
-                "data".getBytes(),
-                ZooDefs.Ids.OPEN_ACL_UNSAFE,
-                CreateMode.EPHEMERAL_SEQUENTIAL
-        );
 
         final Flow<HttpRequest, HttpResponse, NotUsed> routeFlow = app.route().flow(system, materializer);
         final CompletionStage<ServerBinding> binding = http.bindAndHandle(
@@ -73,6 +63,25 @@ public class HTTPServerAkka extends AllDirectives {
                 .thenAccept(unbound -> system.terminate());
 
     }
+
+
+    private static void createZoo(int port) throws IOException, KeeperException, InterruptedException {
+        zoo = new ZooKeeper(
+                "127.0.0.1:2181",
+                2000,
+                event -> {
+                    System.out.println("MAY BE IT WORKS");
+                }
+        );
+        zoo.create(
+                "/" + Integer.toString(port),
+                "data".getBytes(),
+                ZooDefs.Ids.OPEN_ACL_UNSAFE,
+                CreateMode.EPHEMERAL_SEQUENTIAL
+        );
+    }
+
+
 
     private Route route() {
         return concat(
