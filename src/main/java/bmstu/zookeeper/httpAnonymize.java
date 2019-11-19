@@ -96,6 +96,7 @@ public class httpAnonymize extends AllDirectives {
                                                         }
                                                     }
                                                 });
+                                                System.out.println("ya tut bil");
                                             } catch (KeeperException e) {
                                                 e.printStackTrace();
                                             } catch (InterruptedException e) {
