@@ -77,6 +77,7 @@ public class HTTPServerAkka extends AllDirectives {
                         if (event.getType() == Watcher.Event.EventType.NodeCreated) {
                             System.out.println("NODE WAS CREATED");
                         }
+                        process(event);
                     }
                 }
         );
@@ -108,7 +109,13 @@ public class HTTPServerAkka extends AllDirectives {
                                 parameter(COUNT, count -> {
                                             int parsedCount = Integer.parseInt(count);
                                             if (parsedCount != 0) {
-                                                return complete(fetch(url, parsedCount).toCompletableFuture().get());
+                                                try {
+                                                    return complete(fetch(url, parsedCount).toCompletableFuture().get());
+                                                } catch (InterruptedException e) {
+                                                    e.printStackTrace();
+                                                } catch (ExecutionException e) {
+                                                    e.printStackTrace();
+                                                }
                                             }
                                             return complete(")");
 
