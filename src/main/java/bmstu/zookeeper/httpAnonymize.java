@@ -26,15 +26,12 @@ public class httpAnonymize {
 
         while(true){
             Thread.sleep(1000);
-            List<String> servers = zoo.getChildren("/servers", event -> {
+                zoo.getChildren("/servers", event -> {
                 System.out.println(event.getPath());
                 System.out.println(event.toString());
                 System.out.println(event.getType());
-                if(event.getType() == Watcher.Event.EventType.NodeCreated){
+                if(event.getType() == Watcher.Event.EventType.NodeChildrenChanged){
                     System.out.println("NODE_WAS_CREATED");
-                }
-                if(event.getType() == Watcher.Event.EventType.NodeDeleted){
-                    System.out.println("NODE_WAS_DELETED");
                 }
             });
             for(String s : servers){
