@@ -70,7 +70,6 @@ public class HTTPServerAkka extends AllDirectives {
                 new Watcher() {
                     @Override
                     public void process(WatchedEvent event) {
-                        System.out.println("HELLO???");
                         if (event.getState() == Watcher.Event.KeeperState.SyncConnected) {
                             connSignal.countDown();
                         }
