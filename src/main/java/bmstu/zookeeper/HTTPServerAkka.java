@@ -17,11 +17,13 @@ import org.apache.zookeeper.*;
 import java.io.IOException;
 import java.util.Scanner;
 import java.util.concurrent.CompletionStage;
+import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 
 public class HTTPServerAkka extends AllDirectives {
     private static ZooKeeper zoo;
+    private static CountDownLatch connSignal = new CountDownLatch(0);
     private static Http http;
     private static final String ROUTES = "routes";
     private static final String LOCALHOST = "localhost";
@@ -65,9 +67,15 @@ public class HTTPServerAkka extends AllDirectives {
         zoo = new ZooKeeper(
                 "127.0.0.1:2181",
                 2000,
-                event -> {
-                    if(event.getType() == Watcher.Event.EventType.NodeCreated){
-                        
+                new Watcher() {
+                    @Override
+                    public void process(WatchedEvent event) {
+                        if (event.getState() == Watcher.Event.KeeperState.SyncConnected) {
+                            connSignal.countDown();
+                        }
+                        if (event.getType() == Watcher.Event.EventType.NodeCreated) {
+
+                        }
                     }
                 }
         );
