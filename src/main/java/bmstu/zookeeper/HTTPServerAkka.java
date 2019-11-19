@@ -66,12 +66,7 @@ public class HTTPServerAkka extends AllDirectives {
                 "127.0.0.1:2181",
                 2000,
                 event -> {
-                    if (event.getType() == Watcher.Event.EventType.NodeCreated) {
-                        String path = event.getPath();
-                        System.out.println("PATH->" + path);
-                    } else {
-                        System.out.println();
-                    }
+
                 }
         );
         zoo.create(
@@ -80,6 +75,13 @@ public class HTTPServerAkka extends AllDirectives {
                 ZooDefs.Ids.OPEN_ACL_UNSAFE,
                 CreateMode.EPHEMERAL_SEQUENTIAL
         );
+
+        zoo.getChildren("/servers/", event -> {
+            if(event.getType() == Watcher.Event.EventType.NodeCreated){
+                System.out.println(event.getPath());
+            }
+        });
+
     }
 
     CompletionStage<HttpResponse> fetch(String a, int parsedCount) throws InterruptedException, ExecutionException {
