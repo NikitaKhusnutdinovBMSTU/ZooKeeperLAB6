@@ -87,7 +87,7 @@ public class httpAnonymize extends AllDirectives {
                                 parameter(COUNT, count -> {
                                             int parsedCount = Integer.parseInt(count);
                                             try {
-                                                zoo.exists("/servers", new Watcher() {
+                                                zoo.getChildren("/servers", new Watcher() {
                                                     @Override
                                                     public void process(WatchedEvent event) {
                                                         System.out.println("event_worked_again");
