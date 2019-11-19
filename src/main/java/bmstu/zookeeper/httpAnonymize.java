@@ -54,12 +54,23 @@ public class httpAnonymize extends AllDirectives {
             public void process(WatchedEvent event) {
                 System.out.println("event_worked_again");
                 if (event.getType() == Event.EventType.NodeChildrenChanged) {
-                    List<String> servers = zoo.getChildren("/servers", true);
+                    List<String> servers = null;
+                    try {
+                        servers = zoo.getChildren("/servers", true);
+                    } catch (KeeperException | InterruptedException e) {
+                        e.printStackTrace();
+                    }
                     for(String s: servers){
-                        byte[] data = zoo.getData("/servers/" + s, true, Stat.);
-                        System.out.println("[Server : " + s + ", data :" + zoo.getData("/servers" + s, true));
+                        byte[] data = new byte[0];
+                        try {
+                            data = zoo.getData("/servers/" + s, false, null);
+                        } catch (KeeperException | InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                        System.out.println("[Server : " + s + ", data :" + new String(data));
                     }
                 }
+                process(event);
             }
         });
 
