@@ -12,6 +12,11 @@
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+  <component name="CoverageDataManager">
+    <SUITE FILE_PATH="coverage/zookeeperlab6$HTTPServerAkka.ic" NAME="HTTPServerAkka Coverage Results" MODIFIED="1574178726221" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
+      <FILTER>bmstu.zookeeper.*</FILTER>
+    </SUITE>
+  </component>
   <component name="FUSProjectUsageTrigger">
     <session id="430184060">
       <usages-collector id="statistics.lifecycle.project">
@@ -137,7 +142,7 @@
   </component>
   <component name="ProjectFrameBounds">
     <option name="x" value="-36" />
-    <option name="y" value="173" />
+    <option name="y" value="23" />
     <option name="width" value="1331" />
     <option name="height" value="727" />
   </component>
@@ -199,7 +204,7 @@
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1574178686985" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1574178722094" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
     <property name="project.structure.last.edited" value="Modules" />
@@ -218,7 +223,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Application.HTTPServerAkka">
+  <component name="RunManager" selected="Application.httpAnonymizer">
     <configuration default="true" type="Applet" factoryName="Applet">
       <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
       <method v="2">
@@ -288,8 +293,8 @@
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.HTTPServerAkka" />
         <item itemvalue="Application.httpAnonymizer" />
+        <item itemvalue="Application.HTTPServerAkka" />
       </list>
     </recent_temporary>
   </component>
