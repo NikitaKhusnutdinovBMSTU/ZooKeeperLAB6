@@ -30,23 +30,25 @@ public class httpAnonymize extends AllDirectives {
     private static final int TIMEOUT_MILLIS = 5000;
 
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws IOException, KeeperException, InterruptedException {
 
         ZooKeeper zoo = new ZooKeeper(
                 "127.0.0.1:2181",
                 2000,
+                event -> {
 
-                new Watcher() {
-                    @Override
-                    public void process(WatchedEvent event) {
-                        if (event.getType() == Event.EventType.NodeChildrenChanged){
-                            System.out.println("New child in the crew -> " + event.getPath());
-                        }
-                        process(event);
-                    }
                 }
         );
         ActorSystem system = ActorSystem.create(ROUTES);
+        zoo.getChildren("/servers", new Watcher()  {
+            @Override
+            public void process(WatchedEvent event) {
+                if(event.getType() == Event.EventType.NodeChildrenChanged){
+                    System.out.println("New children in the crew ->" + event.getPath());
+                }
+                process(event);
+            }
+        });
 
         Http http = Http.get(system);
         final ActorMaterializer materializer = ActorMaterializer.create(system);

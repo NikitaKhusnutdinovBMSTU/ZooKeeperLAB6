@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="36f44e9b-cd20-4222-9d17-9b105100cf9a" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/src/main/java/bmstu/zookeeper/HTTPServerAkka.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/bmstu/zookeeper/HTTPServerAkka.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/bmstu/zookeeper/httpAnonymize.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/bmstu/zookeeper/httpAnonymize.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
@@ -38,13 +37,13 @@
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
           <entry key="dummy" value="34" />
-          <entry key="java" value="4164" />
+          <entry key="java" value="4318" />
           <entry key="xml" value="5" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="JAVA" value="4164" />
+          <entry key="JAVA" value="4318" />
           <entry key="PLAIN_TEXT" value="34" />
           <entry key="XML" value="5" />
         </counts>
@@ -65,8 +64,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/bmstu/zookeeper/httpAnonymize.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="801">
-              <caret line="77" column="67" selection-start-line="77" selection-start-column="67" selection-end-line="77" selection-end-column="67" />
+            <state relative-caret-position="99">
+              <caret line="42" column="18" lean-forward="true" selection-start-line="42" selection-start-column="18" selection-end-line="42" selection-end-column="18" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -137,7 +136,7 @@
     </treeState>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="y" value="26" />
+    <option name="y" value="33" />
     <option name="width" value="1331" />
     <option name="height" value="727" />
   </component>
@@ -199,7 +198,7 @@
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1574175701328" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1574175732141" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
     <property name="project.structure.last.edited" value="Modules" />
@@ -218,7 +217,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Application.HTTPServerAkka">
+  <component name="RunManager" selected="Application.httpAnonymizer">
     <configuration default="true" type="Applet" factoryName="Applet">
       <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
       <method v="2">
@@ -288,8 +287,8 @@
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.HTTPServerAkka" />
         <item itemvalue="Application.httpAnonymizer" />
+        <item itemvalue="Application.HTTPServerAkka" />
       </list>
     </recent_temporary>
   </component>
@@ -304,18 +303,18 @@
       <option name="presentableId" value="Default" />
       <updated>1574081953557</updated>
       <workItem from="1574081955089" duration="14776000" />
-      <workItem from="1574167691424" duration="6046000" />
+      <workItem from="1574167691424" duration="6308000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="20822000" />
+    <option name="totallyTimeSpent" value="21084000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="26" width="1331" height="727" extended-state="0" />
+    <frame x="0" y="33" width="1331" height="727" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.23584174" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.23584174" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Image Layers" order="2" />
       <window_info id="Designer" order="3" />
@@ -324,7 +323,7 @@
       <window_info id="Favorites" order="6" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.07874016" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.2976378" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -390,8 +389,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/bmstu/zookeeper/httpAnonymize.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="801">
-          <caret line="77" column="67" selection-start-line="77" selection-start-column="67" selection-end-line="77" selection-end-column="67" />
+        <state relative-caret-position="99">
+          <caret line="42" column="18" lean-forward="true" selection-start-line="42" selection-start-column="18" selection-end-line="42" selection-end-column="18" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
