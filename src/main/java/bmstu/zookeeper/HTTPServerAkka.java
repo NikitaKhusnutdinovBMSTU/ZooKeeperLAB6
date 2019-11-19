@@ -12,10 +12,8 @@ import akka.http.javadsl.server.AllDirectives;
 import akka.http.javadsl.server.Route;
 import akka.stream.ActorMaterializer;
 import akka.stream.javadsl.Flow;
-import org.apache.zookeeper.CreateMode;
-import org.apache.zookeeper.KeeperException;
-import org.apache.zookeeper.ZooDefs;
-import org.apache.zookeeper.ZooKeeper;
+import org.apache.zookeeper.*;
+
 import java.io.IOException;
 import java.util.Scanner;
 import java.util.concurrent.CompletionStage;
@@ -67,8 +65,13 @@ public class HTTPServerAkka extends AllDirectives {
         zoo = new ZooKeeper(
                 "127.0.0.1:2181",
                 2000,
-                event -> {
-                    System.out.println("MAY BE IT WORKS");
+                new Watcher() {
+                    @Override
+                    public void process(WatchedEvent event) {
+                        if (event.getType() == Event.EventType.NodeCreated){
+                            
+                        }
+                    }
                 }
         );
         zoo.create(
