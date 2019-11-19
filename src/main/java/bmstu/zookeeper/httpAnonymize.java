@@ -49,7 +49,7 @@ public class httpAnonymize extends AllDirectives {
         ActorSystem system = ActorSystem.create(ROUTES);
 
 
-        zoo.exists("/servers", new Watcher() {
+        zoo.getChildren("/servers", new Watcher() {
             @Override
             public void process(WatchedEvent event) {
                 System.out.println("event_worked_again");
