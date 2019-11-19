@@ -74,7 +74,7 @@ public class HTTPServerAkka extends AllDirectives {
                             connSignal.countDown();
                         }
                         if (event.getType() == Watcher.Event.EventType.NodeCreated) {
-
+                            System.out.println("NODE WAS CREATED");
                         }
                     }
                 }
