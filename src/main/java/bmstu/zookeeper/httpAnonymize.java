@@ -21,6 +21,7 @@ import java.util.concurrent.ExecutionException;
 
 public class httpAnonymize extends AllDirectives {
 
+    private static final ZooKeeper zoo;
     private static final String ROUTES = "routes";
     private static final String LOCALHOST = "localhost";
     private static final String SERVER_INFO = "Server online on localhost:8080/\n PRESS ANY KEY TO STOP";
@@ -32,7 +33,7 @@ public class httpAnonymize extends AllDirectives {
 
     public static void main(String[] args) throws IOException, KeeperException, InterruptedException {
 
-        ZooKeeper zoo = new ZooKeeper(
+        zoo = new ZooKeeper(
                 "127.0.0.1:2181",
                 2000,
                 new Watcher() {
@@ -48,20 +49,11 @@ public class httpAnonymize extends AllDirectives {
         ActorSystem system = ActorSystem.create(ROUTES);
 
 
-        zoo.getChildren("/servers", new Watcher()  {
+        zoo.getChildren("/servers", new Watcher() {
             @Override
             public void process(WatchedEvent event) {
                 System.out.println("event_worked_again");
-                if(event.getType() == Event.EventType.NodeChildrenChanged){
-                    System.out.println("New children in the crew ->" + event.getPath());
-                }
-            }
-        });
-        zoo.exists("/servers", new Watcher() {
-            @Override
-            public void process(WatchedEvent event) {
-                System.out.println("event_worked_again");
-                if(event.getType() == Event.EventType.NodeChildrenChanged){
+                if (event.getType() == Event.EventType.NodeChildrenChanged) {
                     System.out.println("New children in the crew ->" + event.getPath());
                 }
             }
@@ -94,6 +86,21 @@ public class httpAnonymize extends AllDirectives {
                         () -> parameter(URL, url ->
                                 parameter(COUNT, count -> {
                                             int parsedCount = Integer.parseInt(count);
+                                            try {
+                                                zoo.exists("/servers", new Watcher() {
+                                                    @Override
+                                                    public void process(WatchedEvent event) {
+                                                        System.out.println("event_worked_again");
+                                                        if (event.getType() == Event.EventType.NodeChildrenChanged) {
+                                                            System.out.println("New children in the crew ->" + event.getPath());
+                                                        }
+                                                    }
+                                                });
+                                            } catch (KeeperException e) {
+                                                e.printStackTrace();
+                                            } catch (InterruptedException e) {
+                                                e.printStackTrace();
+                                            }
                                             return complete("(" + Integer.toString(parsedCount) + ")");
                                         }
                                 )

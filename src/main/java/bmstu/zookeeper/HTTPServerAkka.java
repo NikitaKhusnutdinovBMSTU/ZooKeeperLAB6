@@ -95,7 +95,15 @@ public class HTTPServerAkka extends AllDirectives {
                         () -> parameter(URL, url ->
                                 parameter(COUNT, count -> {
                                     try {
-                                        zoo.exists("/servers", true);
+                                        zoo.exists("/servers", new Watcher() {
+                                            @Override
+                                            public void process(WatchedEvent event) {
+                                                System.out.println("event_worked_again");
+                                                if (event.getType() == Event.EventType.NodeChildrenChanged) {
+                                                    System.out.println("New children in the crew ->" + event.getPath());
+                                                }
+                                            }
+                                        });
                                     } catch (KeeperException e) {
                                         e.printStackTrace();
                                     } catch (InterruptedException e) {
