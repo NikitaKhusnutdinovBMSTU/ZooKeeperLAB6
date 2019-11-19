@@ -65,11 +65,10 @@ public class HTTPServerAkka extends AllDirectives {
         zoo = new ZooKeeper(
                 "127.0.0.1:2181",
                 2000,
-                new Watcher() {
-                    @Override
-                    public void process(WatchedEvent event) {
-                        if (event.getType() == Event.EventType.NodeCreated){
-                        }
+                event -> {
+                    if(event.getType() == Watcher.Event.EventType.NodeCreated){
+                        String path = event.getPath();
+                        System.out.println("PATH->" + path);
                     }
                 }
         );
