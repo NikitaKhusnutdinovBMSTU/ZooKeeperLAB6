@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="36f44e9b-cd20-4222-9d17-9b105100cf9a" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/src/main/java/bmstu/zookeeper/HTTPServerAkka.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/bmstu/zookeeper/HTTPServerAkka.java" afterDir="false" />
-    </list>
+    <list default="true" id="36f44e9b-cd20-4222-9d17-9b105100cf9a" name="Default Changelist" comment="" />
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/target/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -76,8 +74,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/bmstu/zookeeper/HTTPServerAkka.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="221">
-              <caret line="116" column="53" lean-forward="true" selection-start-line="116" selection-start-column="53" selection-end-line="116" selection-end-column="53" />
+            <state relative-caret-position="306">
+              <caret line="86" column="35" selection-start-line="86" selection-start-column="35" selection-end-line="86" selection-end-column="35" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -136,8 +134,8 @@
     </treeState>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="-40" />
-    <option name="y" value="179" />
+    <option name="x" value="-51" />
+    <option name="y" value="658" />
     <option name="width" value="1331" />
     <option name="height" value="713" />
   </component>
@@ -199,7 +197,7 @@
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1574171369268" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1574171543102" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
     <property name="project.structure.last.edited" value="Modules" />
@@ -304,15 +302,15 @@
       <option name="presentableId" value="Default" />
       <updated>1574081953557</updated>
       <workItem from="1574081955089" duration="14776000" />
-      <workItem from="1574167691424" duration="3584000" />
+      <workItem from="1574167691424" duration="3831000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="18360000" />
+    <option name="totallyTimeSpent" value="18607000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="516" width="1331" height="713" extended-state="0" />
+    <frame x="-51" y="658" width="1331" height="713" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.23584174" />
@@ -356,7 +354,7 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/bmstu/zookeeper/HTTPServerAkka.java</url>
-          <line>120</line>
+          <line>110</line>
           <properties />
           <option name="timeStamp" value="2" />
         </line-breakpoint>
@@ -390,8 +388,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/bmstu/zookeeper/HTTPServerAkka.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="221">
-          <caret line="116" column="53" lean-forward="true" selection-start-line="116" selection-start-column="53" selection-end-line="116" selection-end-column="53" />
+        <state relative-caret-position="306">
+          <caret line="86" column="35" selection-start-line="86" selection-start-column="35" selection-end-line="86" selection-end-column="35" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
