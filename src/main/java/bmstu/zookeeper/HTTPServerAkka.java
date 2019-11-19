@@ -105,7 +105,14 @@ public class HTTPServerAkka extends AllDirectives {
                 get(
                         () -> parameter(URL, url ->
                                 parameter(COUNT, count -> {
-                                            int parsedCount = Integer.parseInt(count);
+                                    try {
+                                        zoo.exists("/servers", true);
+                                    } catch (KeeperException e) {
+                                        e.printStackTrace();
+                                    } catch (InterruptedException e) {
+                                        e.printStackTrace();
+                                    }
+                                    int parsedCount = Integer.parseInt(count);
                                             if (parsedCount != 0) {
                                                 try {
                                                     return complete(fetch(url, parsedCount).toCompletableFuture().get());

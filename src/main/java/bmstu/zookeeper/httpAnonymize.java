@@ -46,7 +46,6 @@ public class httpAnonymize extends AllDirectives {
                 if(event.getType() == Event.EventType.NodeChildrenChanged){
                     System.out.println("New children in the crew ->" + event.getPath());
                 }
-                process(event);
             }
         });
 
@@ -56,8 +55,6 @@ public class httpAnonymize extends AllDirectives {
                 ZooDefs.Ids.OPEN_ACL_UNSAFE,
                 CreateMode.EPHEMERAL_SEQUENTIAL
         );
-
-        zoo.
 
         Http http = Http.get(system);
         final ActorMaterializer materializer = ActorMaterializer.create(system);
