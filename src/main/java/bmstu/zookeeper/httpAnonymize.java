@@ -35,8 +35,17 @@ public class httpAnonymize extends AllDirectives {
         ZooKeeper zoo = new ZooKeeper(
                 "127.0.0.1:2181",
                 2000,
-                event -> {
-                    System.out.println("WORKED!");
+                new Watcher() {
+                    @Override
+                    public void process(WatchedEvent event) {
+                        if (event.getState() == Watcher.Event.KeeperState.SyncConnected) {
+                            connSignal.countDown();
+                        }
+                        if (event.getType() == Event.EventType.NodeChildrenChanged) {
+                            System.out.println("NODE WAS CREATED");
+                        }
+                        process(event);
+                    }
                 }
         );
         ActorSystem system = ActorSystem.create(ROUTES);

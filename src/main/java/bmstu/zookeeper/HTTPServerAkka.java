@@ -67,18 +67,7 @@ public class HTTPServerAkka extends AllDirectives {
         zoo = new ZooKeeper(
                 "127.0.0.1:2181",
                 2000,
-                new Watcher() {
-                    @Override
-                    public void process(WatchedEvent event) {
-                        if (event.getState() == Watcher.Event.KeeperState.SyncConnected) {
-                            connSignal.countDown();
-                        }
-                        if (event.getType() == Event.EventType.NodeChildrenChanged) {
-                            System.out.println("NODE WAS CREATED");
-                        }
-                        process(event);
-                    }
-                }
+                a -> {}
         );
         zoo.create(
                 "/servers/" + Integer.toString(port),
