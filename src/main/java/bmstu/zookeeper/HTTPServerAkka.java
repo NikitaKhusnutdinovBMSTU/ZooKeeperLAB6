@@ -95,8 +95,7 @@ public class HTTPServerAkka extends AllDirectives {
                 }
                 if (event.getType() == Event.EventType.NodeChildrenChanged) {
                     System.out.println("NODE WAS CREATED");
-                }
-                if(event != null) {
+                }else {
                     process(event);
                 }
             }
