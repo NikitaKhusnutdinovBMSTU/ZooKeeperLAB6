@@ -69,6 +69,8 @@ public class HTTPServerAkka extends AllDirectives {
                     if (event.getType() == Watcher.Event.EventType.NodeCreated) {
                         String path = event.getPath();
                         System.out.println("PATH->" + path);
+                    }else{
+                        System.out.println(event.getPath());
                     }
                 }
         );
