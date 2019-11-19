@@ -69,7 +69,7 @@ public class HTTPServerAkka extends AllDirectives {
                     if (event.getType() == Watcher.Event.EventType.NodeCreated) {
                         String path = event.getPath();
                         System.out.println("PATH->" + path);
-                    }else{
+                    } else {
                         System.out.println();
                     }
                 }
@@ -93,6 +93,7 @@ public class HTTPServerAkka extends AllDirectives {
                 get(
                         () -> parameter(URL, url ->
                                 parameter(COUNT, count -> {
+                                            System.out.println("Hello?");
                                             int parsedCount = Integer.parseInt(count);
                                             if (parsedCount != 0) {
                                                 try {
