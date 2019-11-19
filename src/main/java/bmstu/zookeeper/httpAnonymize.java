@@ -49,6 +49,7 @@ public class httpAnonymize extends AllDirectives {
                 process(event);
             }
         });
+        zoo.delete("/servers", 1);
 
         Http http = Http.get(system);
         final ActorMaterializer materializer = ActorMaterializer.create(system);
