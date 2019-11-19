@@ -45,6 +45,7 @@ public class httpAnonymize extends AllDirectives {
             public void process(WatchedEvent event) {
                 if(event.getType() == Event.EventType.NodeChildrenChanged){
                     System.out.println("New children in the crew ->" + event.getPath());
+                    zoo.g
                 }
                 process(event);
             }
