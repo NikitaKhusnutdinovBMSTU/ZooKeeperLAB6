@@ -40,6 +40,14 @@ public class httpAnonymize extends AllDirectives {
                 }
         );
         ActorSystem system = ActorSystem.create(ROUTES);
+
+        zoo.create(
+                "/servers",
+                "parent".getBytes(),
+                ZooDefs.Ids.OPEN_ACL_UNSAFE,
+                CreateMode.EPHEMERAL_SEQUENTIAL
+        );
+        
         zoo.getChildren("/servers", new Watcher()  {
             @Override
             public void process(WatchedEvent event) {
@@ -48,13 +56,6 @@ public class httpAnonymize extends AllDirectives {
                 }
             }
         });
-
-        zoo.create(
-                "/servers",
-                "parent".getBytes(),
-                ZooDefs.Ids.OPEN_ACL_UNSAFE,
-                CreateMode.EPHEMERAL_SEQUENTIAL
-        );
 
         Http http = Http.get(system);
         final ActorMaterializer materializer = ActorMaterializer.create(system);
