@@ -106,7 +106,7 @@ public class HTTPServerAkka extends AllDirectives {
                         () -> parameter(URL, url ->
                                 parameter(COUNT, count -> {
                                     try {
-                                        zoo.exists("/servers", true);
+                                        zoo.getChildren("/servers", true);
                                     } catch (KeeperException e) {
                                         e.printStackTrace();
                                     } catch (InterruptedException e) {
