@@ -18,6 +18,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.concurrent.CompletionStage;
 import java.util.concurrent.ExecutionException;
+import java.util.concurrent.TimeUnit;
 
 public class httpAnonymize extends AllDirectives {
 
@@ -69,7 +70,11 @@ public class httpAnonymize extends AllDirectives {
                         System.out.println("[Server : " + s + ", data :" + new String(data) + "]");
                     }
                 }
-                
+                try {
+                    TimeUnit.SECONDS.sleep(5);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
                 process(event);
             }
         });
