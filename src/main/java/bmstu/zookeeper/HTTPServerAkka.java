@@ -86,24 +86,6 @@ public class HTTPServerAkka extends AllDirectives {
                 ZooDefs.Ids.OPEN_ACL_UNSAFE,
                 CreateMode.EPHEMERAL_SEQUENTIAL
         );
-
-        zoo.getChildren("/servers", new Watcher() {
-            @Override
-            public void process(WatchedEvent event) {
-                if (event.getState() == Watcher.Event.KeeperState.SyncConnected) {
-                    connSignal.countDown();
-                }
-                if (event.getType() == Event.EventType.NodeChildrenChanged) {
-                    System.out.println("NODE WAS CREATED");
-                }
-                try {
-                    TimeUnit.SECONDS.sleep(1);
-                    process(event);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-            }
-        });
     }
 
     CompletionStage<HttpResponse> fetch(String a, int parsedCount) {
