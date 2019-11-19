@@ -1,6 +1,7 @@
 package bmstu.zookeeper;
 
 import akka.NotUsed;
+import akka.actor.ActorRef;
 import akka.actor.ActorSystem;
 import akka.http.javadsl.ConnectHttp;
 import akka.http.javadsl.Http;
@@ -15,16 +16,15 @@ import akka.stream.javadsl.Flow;
 import org.apache.zookeeper.*;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.Scanner;
-import java.util.concurrent.CompletionStage;
-import java.util.concurrent.CountDownLatch;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.TimeUnit;
+import java.util.concurrent.*;
 
 public class HTTPServerAkka extends AllDirectives {
     private static ZooKeeper zoo;
     private static CountDownLatch connSignal = new CountDownLatch(0);
     private static Http http;
+    private static ActorRef storageActor;
     private static final String ROUTES = "routes";
     private static final String LOCALHOST = "localhost";
     private static final String SERVER_INFO = "Server online on localhost:8080/\n PRESS ANY KEY TO STOP";
@@ -95,34 +95,30 @@ public class HTTPServerAkka extends AllDirectives {
 
     }
 
-    CompletionStage<HttpResponse> fetch(String a, int parsedCount) throws InterruptedException, ExecutionException {
-        return http.singleRequest(
-                HttpRequest.create("http://localhost:2050/?" + "url=" + a + "&count=" +
-                        Integer.toString(parsedCount - 1)));
+    CompletionStage<HttpResponse> fetch(String a, int parsedCount) {
+        try {
+            return http.singleRequest(
+                    HttpRequest.create("http://localhost:2050/?" + "url=" + a + "&count=" +
+                            Integer.toString(parsedCount - 1)));
+        }catch(Exception e){
+            return CompletableFuture.completedFuture(HttpResponse.create().withEntity("404"));
+        }
     }
 
-    private Route route() throws KeeperException, InterruptedException {
-        zoo.getChildren("/servers", event -> {
-            while(true){
-                if(event.getType() == Watcher.Event.EventType.NodeChildrenChanged){
-                    System.out.println("KEK)");
-                }
-            }
-        });
+
+
+    private Route route() {
         return concat(
                 get(
                         () -> parameter(URL, url ->
                                 parameter(COUNT, count -> {
-                                            System.out.println("Hello?");
                                             int parsedCount = Integer.parseInt(count);
+                                            final List<String> servers;
+                                            servers = zoo.getChildren("/servers", event -> {
+                                                storageActor.tell(new List<String>(servers), ActorRef.noSender());
+                                            });
                                             if (parsedCount != 0) {
-                                                try {
-                                                    return complete(fetch(url, parsedCount).toCompletableFuture().get());
-                                                } catch (InterruptedException e) {
-                                                    e.printStackTrace();
-                                                } catch (ExecutionException e) {
-                                                    e.printStackTrace();
-                                                }
+                                                return complete(fetch(url, parsedCount).toCompletableFuture().get());
                                             }
                                             return complete(")");
 
