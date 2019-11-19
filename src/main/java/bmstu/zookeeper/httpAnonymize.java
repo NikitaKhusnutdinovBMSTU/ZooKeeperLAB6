@@ -106,22 +106,6 @@ public class httpAnonymize extends AllDirectives {
                         () -> parameter(URL, url ->
                                 parameter(COUNT, count -> {
                                             int parsedCount = Integer.parseInt(count);
-                                            try {
-                                                zoo.getChildren("/servers", new Watcher() {
-                                                    @Override
-                                                    public void process(WatchedEvent event) {
-                                                        System.out.println("event_worked_again");
-                                                        if (event.getType() == Event.EventType.NodeChildrenChanged) {
-                                                            System.out.println("New children in the crew ->" + event.getPath());
-                                                        }
-                                                    }
-                                                });
-                                                System.out.println("ya tut bil");
-                                            } catch (KeeperException e) {
-                                                e.printStackTrace();
-                                            } catch (InterruptedException e) {
-                                                e.printStackTrace();
-                                            }
                                             return complete("(" + Integer.toString(parsedCount) + ")");
                                         }
                                 )
