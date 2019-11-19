@@ -69,14 +69,13 @@ public class HTTPServerAkka extends AllDirectives {
                     @Override
                     public void process(WatchedEvent event) {
                         if (event.getType() == Event.EventType.NodeCreated){
-                            
                         }
                     }
                 }
         );
         zoo.create(
                 "/servers/" + Integer.toString(port),
-                "data".getBytes(),
+                Integer.toString(port).getBytes(),
                 ZooDefs.Ids.OPEN_ACL_UNSAFE,
                 CreateMode.EPHEMERAL_SEQUENTIAL
         );
