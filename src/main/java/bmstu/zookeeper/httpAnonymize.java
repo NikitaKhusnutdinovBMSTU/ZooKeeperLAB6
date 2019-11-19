@@ -38,9 +38,6 @@ public class httpAnonymize extends AllDirectives {
                 new Watcher() {
                     @Override
                     public void process(WatchedEvent event) {
-                        if (event.getState() == Watcher.Event.KeeperState.SyncConnected) {
-                            connSignal.countDown();
-                        }
                         if (event.getType() == Event.EventType.NodeChildrenChanged) {
                             System.out.println("NODE WAS CREATED");
                         }
