@@ -66,7 +66,9 @@ public class HTTPServerAkka extends AllDirectives {
                 "127.0.0.1:2181",
                 2000,
                 event -> {
-
+                    if(event.getType() == Watcher.Event.EventType.NodeCreated){
+                        System.out.println(event.getPath());
+                    }
                 }
         );
         zoo.create(
@@ -75,12 +77,6 @@ public class HTTPServerAkka extends AllDirectives {
                 ZooDefs.Ids.OPEN_ACL_UNSAFE,
                 CreateMode.EPHEMERAL_SEQUENTIAL
         );
-
-        zoo.getChildren("/servers", event -> {
-            if(event.getType() == Watcher.Event.EventType.NodeCreated){
-                System.out.println(event.getPath());
-            }
-        });
 
     }
 
