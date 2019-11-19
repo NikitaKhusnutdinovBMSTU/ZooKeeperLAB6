@@ -67,7 +67,7 @@ public class HTTPServerAkka extends AllDirectives {
                 2000,
                 event -> {
                     if(event.getType() == Watcher.Event.EventType.NodeCreated){
-                        System.out.println(event.getPath());
+                        
                     }
                 }
         );
