@@ -36,7 +36,7 @@ public class httpAnonymize extends AllDirectives {
                 "127.0.0.1:2181",
                 2000,
                 event -> {
-
+                    System.out.println("WORKED!");
                 }
         );
         ActorSystem system = ActorSystem.create(ROUTES);
@@ -47,7 +47,7 @@ public class httpAnonymize extends AllDirectives {
                 ZooDefs.Ids.OPEN_ACL_UNSAFE,
                 CreateMode.EPHEMERAL_SEQUENTIAL
         );
-        
+
         zoo.getChildren("/servers", new Watcher()  {
             @Override
             public void process(WatchedEvent event) {
