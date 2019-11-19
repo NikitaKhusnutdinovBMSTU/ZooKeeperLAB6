@@ -87,12 +87,6 @@ public class HTTPServerAkka extends AllDirectives {
                 CreateMode.EPHEMERAL_SEQUENTIAL
         );
 
-        zoo.getChildren("/servers", event -> {
-           if (event.getType() == Watcher.Event.EventType.NodeChildrenChanged){
-               System.out.println("HAHAHAHAHAHAHAHHAHA");
-           }
-        });
-
     }
 
     CompletionStage<HttpResponse> fetch(String a, int parsedCount) {
@@ -113,10 +107,6 @@ public class HTTPServerAkka extends AllDirectives {
                         () -> parameter(URL, url ->
                                 parameter(COUNT, count -> {
                                             int parsedCount = Integer.parseInt(count);
-                                            final List<String> servers;
-                                            servers = zoo.getChildren("/servers", event -> {
-                                                storageActor.tell(new List<String>(servers), ActorRef.noSender());
-                                            });
                                             if (parsedCount != 0) {
                                                 return complete(fetch(url, parsedCount).toCompletableFuture().get());
                                             }
