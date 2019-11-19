@@ -66,7 +66,7 @@ public class HTTPServerAkka extends AllDirectives {
                 "127.0.0.1:2181",
                 2000,
                 event -> {
-                    if(event.getType() == Watcher.Event.EventType.NodeCreated){
+                    if (event.getType() == Watcher.Event.EventType.NodeCreated) {
                         String path = event.getPath();
                         System.out.println("PATH->" + path);
                     }
@@ -86,16 +86,22 @@ public class HTTPServerAkka extends AllDirectives {
                         Integer.toString(parsedCount - 1)));
     }
 
-    private Route route(){
+    private Route route() {
         return concat(
                 get(
                         () -> parameter(URL, url ->
                                 parameter(COUNT, count -> {
                                             int parsedCount = Integer.parseInt(count);
-                                            if(parsedCount == 0)
-                                                return complete(")");
-                                            System.out.println("->" + Integer.toString(parsedCount));
-                                            return complete(fetch(url, parsedCount).toCompletableFuture().get());
+                                            if (parsedCount != 0) {
+                                                try {
+                                                    return complete(fetch(url, parsedCount).toCompletableFuture().get());
+                                                } catch (InterruptedException e) {
+                                                    e.printStackTrace();
+                                                } catch (ExecutionException e) {
+                                                    e.printStackTrace();
+                                                }
+                                            }
+                                            return complete(")");
 
                                             //return completeOKWithFuture(result, Jackson.marshaller());
                                         }
