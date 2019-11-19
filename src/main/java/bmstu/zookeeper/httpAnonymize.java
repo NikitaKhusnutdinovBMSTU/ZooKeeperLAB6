@@ -27,7 +27,9 @@ public class httpAnonymize {
         while(true){
             Thread.sleep(1000);
             List<String> servers = zoo.getChildren("/servers", event -> {
-                System.out.println("HAHA?");
+                System.out.println(event.getPath());
+                System.out.println(event.toString());
+                System.out.println(event.getType());
                 if(event.getType() == Watcher.Event.EventType.NodeCreated){
                     System.out.println("NODE_WAS_CREATED");
                 }
