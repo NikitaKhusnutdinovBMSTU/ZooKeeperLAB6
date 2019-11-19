@@ -51,6 +51,7 @@ public class httpAnonymize extends AllDirectives {
         zoo.getChildren("/servers", new Watcher()  {
             @Override
             public void process(WatchedEvent event) {
+                System.out.println("event_worked_again");
                 if(event.getType() == Event.EventType.NodeChildrenChanged){
                     System.out.println("New children in the crew ->" + event.getPath());
                 }
