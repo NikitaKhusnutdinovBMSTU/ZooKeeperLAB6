@@ -24,18 +24,18 @@ public class httpAnonymize {
                 }
         );
 
-        while(true){
+        while (true) {
             Thread.sleep(1000);
-                zoo.getChildren("/servers", event -> {
+            List<String> servers = zoo.getChildren("/servers", event -> {
                 System.out.println(event.getPath());
                 System.out.println(event.toString());
                 System.out.println(event.getType());
-                if(event.getType() == Watcher.Event.EventType.NodeChildrenChanged){
+                if (event.getType() == Watcher.Event.EventType.NodeChildrenChanged) {
                     System.out.println("NODE_WAS_CREATED");
                 }
             });
-            for(String s : servers){
-                byte[] data = zoo.getData("/servers/" + s,false, null);
+            for (String s : servers) {
+                byte[] data = zoo.getData("/servers/" + s, false, null);
                 System.out.println("/servers/" + s + " data = " + new String(data));
             }
         }

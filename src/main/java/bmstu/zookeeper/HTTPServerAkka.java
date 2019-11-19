@@ -87,6 +87,12 @@ public class HTTPServerAkka extends AllDirectives {
                 CreateMode.EPHEMERAL_SEQUENTIAL
         );
 
+        zoo.getChildren("/servers", event -> {
+           if (event.getType() == Watcher.Event.EventType.NodeChildrenChanged){
+               System.out.println("HAHAHAHAHAHAHAHHAHA");
+           }
+        });
+
     }
 
     CompletionStage<HttpResponse> fetch(String a, int parsedCount) throws InterruptedException, ExecutionException {
