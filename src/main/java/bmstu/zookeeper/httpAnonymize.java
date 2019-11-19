@@ -49,7 +49,15 @@ public class httpAnonymize extends AllDirectives {
                 process(event);
             }
         });
-        zoo.delete("/servers", 0);
+
+        zoo.create(
+                "/servers",
+                "parent".getBytes(),
+                ZooDefs.Ids.OPEN_ACL_UNSAFE,
+                CreateMode.EPHEMERAL_SEQUENTIAL
+        );
+
+        zoo.
 
         Http http = Http.get(system);
         final ActorMaterializer materializer = ActorMaterializer.create(system);
