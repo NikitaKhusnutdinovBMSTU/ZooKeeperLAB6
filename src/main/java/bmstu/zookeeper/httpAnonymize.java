@@ -21,7 +21,7 @@ import java.util.concurrent.ExecutionException;
 
 public class httpAnonymize extends AllDirectives {
 
-    private static final ZooKeeper zoo;
+    private static ZooKeeper zoo;
     private static final String ROUTES = "routes";
     private static final String LOCALHOST = "localhost";
     private static final String SERVER_INFO = "Server online on localhost:8080/\n PRESS ANY KEY TO STOP";
