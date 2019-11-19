@@ -101,7 +101,10 @@ public class HTTPServerAkka extends AllDirectives {
                         Integer.toString(parsedCount - 1)));
     }
 
-    private Route route() {
+    private Route route() throws KeeperException, InterruptedException {
+        zoo.getChildren("/servers", event -> {
+            System.out.println("???)");
+        });
         return concat(
                 get(
                         () -> parameter(URL, url ->
