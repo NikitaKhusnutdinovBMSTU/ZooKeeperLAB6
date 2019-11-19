@@ -25,7 +25,7 @@ public class httpAnonymize {
         );
 
         while(true){
-            
+            Thread.sleep(1000);
             List<String> servers = zoo.getChildren("/servers", a->{});
             for(String s : servers){
                 byte[] data = zoo.getData("/servers/" + s,false, null);
