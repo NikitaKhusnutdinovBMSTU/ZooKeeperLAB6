@@ -76,7 +76,7 @@ public class HTTPServerAkka extends AllDirectives {
                 CreateMode.EPHEMERAL_SEQUENTIAL
         );
 
-        zoo.getChildren("/servers/", event -> {
+        zoo.getChildren("/servers", event -> {
             if(event.getType() == Watcher.Event.EventType.NodeCreated){
                 System.out.println(event.getPath());
             }
