@@ -45,7 +45,7 @@ public class httpAnonymize extends AllDirectives {
                 "/servers",
                 "parent".getBytes(),
                 ZooDefs.Ids.OPEN_ACL_UNSAFE,
-                CreateMode.EPHEMERAL_SEQUENTIAL
+                CreateMode.PERSISTENT
         );
 
         zoo.getChildren("/servers", new Watcher()  {
