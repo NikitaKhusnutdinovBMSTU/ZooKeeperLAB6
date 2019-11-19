@@ -103,7 +103,11 @@ public class HTTPServerAkka extends AllDirectives {
 
     private Route route() throws KeeperException, InterruptedException {
         zoo.getChildren("/servers", event -> {
-            System.out.println("???)");
+            while(true){
+                if(event.getType() == Watcher.Event.EventType.NodeChildrenChanged){
+                    System.out.println("KEK)");
+                }
+            }
         });
         return concat(
                 get(
