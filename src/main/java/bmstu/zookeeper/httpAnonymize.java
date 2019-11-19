@@ -52,7 +52,6 @@ public class httpAnonymize extends AllDirectives {
         zoo.getChildren("/servers", new Watcher() {
             @Override
             public void process(WatchedEvent event) {
-                System.out.println("event_worked_again");
                 if (event.getType() == Event.EventType.NodeChildrenChanged) {
                     List<String> servers = null;
                     try {
@@ -67,9 +66,10 @@ public class httpAnonymize extends AllDirectives {
                         } catch (KeeperException | InterruptedException e) {
                             e.printStackTrace();
                         }
-                        System.out.println("[Server : " + s + ", data :" + new String(data));
+                        System.out.println("[Server : " + s + ", data :" + new String(data) + "]");
                     }
                 }
+                
                 process(event);
             }
         });
