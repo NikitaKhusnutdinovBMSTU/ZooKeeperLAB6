@@ -30,7 +30,6 @@ public class HTTPServerAkka extends AllDirectives {
     private static final String SERVER_INFO = "Server online on localhost:8080/\n PRESS ANY KEY TO STOP";
     private static final String URL = "url";
     private static final String COUNT = "count";
-    private static final int PORT;
     private static final int TIMEOUT_MILLIS = 5000;
 
     public static void main(String[] args) throws Exception {
@@ -101,16 +100,8 @@ public class HTTPServerAkka extends AllDirectives {
                 get(
                         () -> parameter(URL, url ->
                                 parameter(COUNT, count -> {
-                                    try {
-                                        createZoo(PORT);
-                                    } catch (IOException e) {
-                                        e.printStackTrace();
-                                    } catch (KeeperException e) {
-                                        e.printStackTrace();
-                                    } catch (InterruptedException e) {
-                                        e.printStackTrace();
-                                    }
-                                    int parsedCount = Integer.parseInt(count);
+                                            System.out.println("Hello?");
+                                            int parsedCount = Integer.parseInt(count);
                                             if (parsedCount != 0) {
                                                 try {
                                                     return complete(fetch(url, parsedCount).toCompletableFuture().get());
