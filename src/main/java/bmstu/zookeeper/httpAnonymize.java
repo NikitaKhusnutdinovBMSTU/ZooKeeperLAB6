@@ -49,15 +49,15 @@ public class httpAnonymize extends AllDirectives {
         ActorSystem system = ActorSystem.create(ROUTES);
 
 
-        zoo.getChildren("/servers", new Watcher() {
-            @Override
-            public void process(WatchedEvent event) {
-                System.out.println("event_worked_again");
-                if (event.getType() == Event.EventType.NodeChildrenChanged) {
-                    System.out.println("New children in the crew ->" + event.getPath());
-                }
-            }
-        });
+//        zoo.getChildren("/servers", new Watcher() {
+//            @Override
+//            public void process(WatchedEvent event) {
+//                System.out.println("event_worked_again");
+//                if (event.getType() == Event.EventType.NodeChildrenChanged) {
+//                    System.out.println("New children in the crew ->" + event.getPath());
+//                }
+//            }
+//        });
 
         Http http = Http.get(system);
         final ActorMaterializer materializer = ActorMaterializer.create(system);
