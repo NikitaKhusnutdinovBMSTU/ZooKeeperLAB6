@@ -75,6 +75,7 @@ public class httpAnonymize extends AllDirectives {
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
+                event.getWrapper().setState(Event.EventType.None.getIntValue());
                 process(event);
             }
         });
