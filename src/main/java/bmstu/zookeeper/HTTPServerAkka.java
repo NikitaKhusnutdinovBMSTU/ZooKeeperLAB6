@@ -167,7 +167,7 @@ public class HTTPServerAkka extends AllDirectives {
                                             if (parsedCount != 0) {
                                                 Future<Object> randomPort = Patterns.ask(storageActor, new GetRandomPort(Integer.toString(port)), 5000);
                                                 try {
-                                                    int reply = (int) Await.result(randomPort, Duration.create(5, TimeUnit.SECONDS));
+                                                    int reply = (int) Await.result(randomPort, Duration.create(parsedCount * 3, TimeUnit.SECONDS));
                                                     return complete(fetchToServer(reply, url, parsedCount).toCompletableFuture().get());
                                                 } catch (Exception e) {
                                                     return complete("Error -> " + e.toString());
