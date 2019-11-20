@@ -43,13 +43,13 @@ public class HTTPServerAkka extends AllDirectives {
         Scanner in = new Scanner(System.in);
         int PORT = in.nextInt();
         ActorSystem system = ActorSystem.create(ROUTES);
+        storageActor = system.actorOf(Props.create(StorageActor.class));
 
         createZoo(PORT);
         port = PORT;
 
         http = Http.get(system);
         final ActorMaterializer materializer = ActorMaterializer.create(system);
-        storageActor = system.actorOf(Props.create(StorageActor.class));
 
         HTTPServerAkka app = new HTTPServerAkka();
 
