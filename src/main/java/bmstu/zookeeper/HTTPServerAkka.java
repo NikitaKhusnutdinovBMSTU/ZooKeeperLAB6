@@ -77,6 +77,7 @@ public class HTTPServerAkka extends AllDirectives {
 
     }
 
+    
 
     private static void createZoo() throws IOException, KeeperException, InterruptedException {
         zoo = new ZooKeeper(
