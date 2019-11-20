@@ -159,7 +159,7 @@
     </treeState>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="y" value="498" />
+    <option name="y" value="23" />
     <option name="width" value="1331" />
     <option name="height" value="680" />
   </component>
@@ -305,13 +305,12 @@
       </method>
     </configuration>
     <list>
-      <item itemvalue="Application.httpAnonymizer" />
+      <item itemvalue="Application.httpAnonymize" />
       <item itemvalue="Application.HTTPServerAkka" />
     </list>
     <recent_temporary>
       <list>
         <item itemvalue="Application.HTTPServerAkka" />
-        <item itemvalue="Application.httpAnonymizer" />
       </list>
     </recent_temporary>
   </component>
