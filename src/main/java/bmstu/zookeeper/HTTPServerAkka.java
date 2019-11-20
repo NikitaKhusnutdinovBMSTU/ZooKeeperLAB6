@@ -162,7 +162,7 @@ public class HTTPServerAkka extends AllDirectives {
     }
 
 
-    private Route route() {
+    private Route route() throws InterruptedException, ExecutionException {
         return concat(
                 get(
                         () -> parameter(URL, url ->
