@@ -6,4 +6,8 @@ public class GetRandomPort {
     public GetRandomPort(String port){
          this.randomPort = port;
      }
+
+    public String getRandomPort() {
+        return this.randomPort;
+    }
 }

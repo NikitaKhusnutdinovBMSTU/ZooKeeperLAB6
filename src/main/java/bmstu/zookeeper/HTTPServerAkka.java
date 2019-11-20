@@ -45,7 +45,7 @@ public class HTTPServerAkka extends AllDirectives {
 
         http = Http.get(system);
         final ActorMaterializer materializer = ActorMaterializer.create(system);
-        storageActor = system.actorOf(Props.create(storageActor.class));
+        storageActor = system.actorOf(Props.create(StorageActor.class));
 
         HTTPServerAkka app = new HTTPServerAkka();
 

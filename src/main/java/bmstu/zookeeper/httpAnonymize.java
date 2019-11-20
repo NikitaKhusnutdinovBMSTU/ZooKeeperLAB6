@@ -17,11 +17,7 @@ import akka.stream.javadsl.Flow;
 import org.apache.zookeeper.*;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.concurrent.CompletionStage;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.TimeUnit;
 
 public class httpAnonymize extends AllDirectives {
 
@@ -44,7 +40,7 @@ public class httpAnonymize extends AllDirectives {
                 event -> {}
         );
         ActorSystem system = ActorSystem.create(ROUTES);
-        storageActor = system.actorOf(Props.create(storageActor.class));
+        storageActor = system.actorOf(Props.create(StorageActor.class));
 
         Http http = Http.get(system);
         final ActorMaterializer materializer = ActorMaterializer.create(system);
