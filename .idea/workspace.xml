@@ -1,10 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="36f44e9b-cd20-4222-9d17-9b105100cf9a" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/src/main/java/bmstu/zookeeper/HTTPServerAkka.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/bmstu/zookeeper/HTTPServerAkka.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/bmstu/zookeeper/storageActor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/bmstu/zookeeper/storageActor.java" afterDir="false" />
-    </list>
+    <list default="true" id="36f44e9b-cd20-4222-9d17-9b105100cf9a" name="Default Changelist" comment="" />
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/target/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -44,13 +41,13 @@
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
           <entry key="dummy" value="44" />
-          <entry key="java" value="6607" />
+          <entry key="java" value="6611" />
           <entry key="xml" value="5" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="JAVA" value="6607" />
+          <entry key="JAVA" value="6611" />
           <entry key="PLAIN_TEXT" value="44" />
           <entry key="XML" value="5" />
         </counts>
@@ -83,8 +80,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/bmstu/zookeeper/HTTPServerAkka.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="76">
-              <caret line="143" column="128" lean-forward="true" selection-start-line="143" selection-start-column="128" selection-end-line="143" selection-end-column="128" />
+            <state relative-caret-position="138">
+              <caret line="147" selection-start-line="147" selection-end-line="147" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -95,8 +92,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/bmstu/zookeeper/storageActor.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="252">
-              <caret line="31" selection-start-line="31" selection-end-line="31" />
+            <state relative-caret-position="147">
+              <caret line="24" column="13" lean-forward="true" selection-start-line="24" selection-start-column="13" selection-end-line="24" selection-end-column="13" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -148,8 +145,8 @@
         <option value="$PROJECT_DIR$/src/main/java/bmstu/zookeeper/ServerMSG.java" />
         <option value="$PROJECT_DIR$/src/main/java/bmstu/zookeeper/httpAnonymize.java" />
         <option value="$PROJECT_DIR$/src/main/java/bmstu/zookeeper/GetRandomPort.java" />
-        <option value="$PROJECT_DIR$/src/main/java/bmstu/zookeeper/storageActor.java" />
         <option value="$PROJECT_DIR$/src/main/java/bmstu/zookeeper/HTTPServerAkka.java" />
+        <option value="$PROJECT_DIR$/src/main/java/bmstu/zookeeper/storageActor.java" />
       </list>
     </option>
   </component>
@@ -234,7 +231,7 @@
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1574252629143" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1574252676562" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
     <property name="project.structure.last.edited" value="Modules" />
@@ -340,18 +337,18 @@
       <updated>1574081953557</updated>
       <workItem from="1574081955089" duration="14776000" />
       <workItem from="1574167691424" duration="12370000" />
-      <workItem from="1574249757566" duration="2785000" />
+      <workItem from="1574249757566" duration="2933000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="29931000" />
+    <option name="totallyTimeSpent" value="30079000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-134" y="92" width="1331" height="680" extended-state="0" />
+    <frame x="-12" y="23" width="1331" height="680" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.23894492" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.23894492" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Image Layers" order="2" />
       <window_info id="Designer" order="3" />
@@ -360,7 +357,7 @@
       <window_info id="Favorites" order="6" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32913387" />
-      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.5283165" visible="true" weight="0.39115646" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.5283165" visible="true" weight="0.39115646" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -438,8 +435,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/bmstu/zookeeper/storageActor.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="252">
-          <caret line="31" selection-start-line="31" selection-end-line="31" />
+        <state relative-caret-position="147">
+          <caret line="24" column="13" lean-forward="true" selection-start-line="24" selection-start-column="13" selection-end-line="24" selection-end-column="13" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
@@ -448,8 +445,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/bmstu/zookeeper/HTTPServerAkka.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="76">
-          <caret line="143" column="128" lean-forward="true" selection-start-line="143" selection-start-column="128" selection-end-line="143" selection-end-column="128" />
+        <state relative-caret-position="138">
+          <caret line="147" selection-start-line="147" selection-end-line="147" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
