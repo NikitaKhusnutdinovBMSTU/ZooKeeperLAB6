@@ -7,7 +7,6 @@ import akka.actor.Props;
 import akka.http.javadsl.ConnectHttp;
 import akka.http.javadsl.Http;
 import akka.http.javadsl.ServerBinding;
-import akka.http.javadsl.marshallers.jackson.Jackson;
 import akka.http.javadsl.model.HttpRequest;
 import akka.http.javadsl.model.HttpResponse;
 import akka.http.javadsl.server.AllDirectives;
@@ -16,13 +15,11 @@ import akka.pattern.Patterns;
 import akka.stream.ActorMaterializer;
 import akka.stream.javadsl.Flow;
 import org.apache.zookeeper.*;
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 import java.util.concurrent.*;
-
 import scala.concurrent.Await;
 import scala.concurrent.Future;
 import scala.concurrent.duration.Duration;
@@ -37,13 +34,19 @@ public class HTTPServerAkka extends AllDirectives {
     private static final String SERVER_INFO = "Server online on localhost:8080/\n PRESS ANY KEY TO STOP";
     private static final String URL = "url";
     private static final String COUNT = "count";
-    private static final String ZOO_KEEPER_DIR = "/servers";
+    private static final String ZOO_KEEPER_HOST = "127.0.0.1:2181";
+    private static final String ZOO_KEEPER_SERVER_DIR = "/servers";
+    private static final String ZOO_KEEPER_CHILD_DIR = "/servers/";
+    private static final String NOT_FOUND = "404";
+    private static final String ERROR_MESSAGE = "Error -> ";
+    private static final String URL_ERROR_MESSAGE = "Unable to connect to url";
     private static final int TIMEOUT_MILLIS = 5000;
+    private static final int AWAIT_DURATION = 20;
 
     public static void main(String[] args) throws Exception {
 
         Scanner in = new Scanner(System.in);
-        int port = in.nextInt();
+        port = in.nextInt();
 
         ActorSystem system = ActorSystem.create(ROUTES);
         storageActor = system.actorOf(Props.create(StorageActor.class));
@@ -71,15 +74,14 @@ public class HTTPServerAkka extends AllDirectives {
 
     private static void createZoo() throws IOException, KeeperException, InterruptedException {
         zoo = new ZooKeeper(
-                "127.0.0.1:2181",
-                2000,
+                ZOO_KEEPER_HOST,
+                TIMEOUT_MILLIS,
                 new Watcher() {
                     @Override
                     public void process(WatchedEvent event) {
-                        System.out.println("ya tut");
                         List<String> servers = new ArrayList<>();
                         try {
-                            servers = zoo.getChildren("/servers", true);
+                            servers = zoo.getChildren(ZOO_KEEPER_SERVER_DIR, true);
                         } catch (KeeperException | InterruptedException e) {
                             e.printStackTrace();
                         }
@@ -96,22 +98,19 @@ public class HTTPServerAkka extends AllDirectives {
                 }
         );
         zoo.create(
-                "/servers/" + Integer.toString(port),
-                Integer.toString(port).
-
-                        getBytes(),
-
+                ZOO_KEEPER_CHILD_DIR + Integer.toString(port),
+                Integer.toString(port).getBytes(),
                 ZooDefs.Ids.OPEN_ACL_UNSAFE,
                 CreateMode.EPHEMERAL_SEQUENTIAL
         );
 
-        zoo.getChildren("/servers", new Watcher() {
+        zoo.getChildren(ZOO_KEEPER_SERVER_DIR, new Watcher() {
             @Override
             public void process(WatchedEvent event) {
                 if (event.getType() == Event.EventType.NodeChildrenChanged) {
                     List<String> servers = new ArrayList<>();
                     try {
-                        servers = zoo.getChildren("/servers", true);
+                        servers = zoo.getChildren(ZOO_KEEPER_SERVER_DIR, true);
                     } catch (KeeperException | InterruptedException e) {
                         e.printStackTrace();
                     }
@@ -133,7 +132,7 @@ public class HTTPServerAkka extends AllDirectives {
         for (String s : servers) {
             byte[] data = new byte[0];
             try {
-                data = zoo.getData("/servers/" + s, false, null);
+                data = zoo.getData(ZOO_KEEPER_CHILD_DIR + s, false, null);
             } catch (KeeperException | InterruptedException e) {
                 e.printStackTrace();
             }
@@ -147,7 +146,7 @@ public class HTTPServerAkka extends AllDirectives {
                     HttpRequest.create("http://localhost:" + Integer.toString(port) + "/?url=" + url + "&count=" +
                             Integer.toString(parsedCount - 1)));
         } catch (Exception e) {
-            return CompletableFuture.completedFuture(HttpResponse.create().withEntity("404"));
+            return CompletableFuture.completedFuture(HttpResponse.create().withEntity(NOT_FOUND));
         }
     }
 
@@ -156,7 +155,7 @@ public class HTTPServerAkka extends AllDirectives {
             return http.singleRequest(
                     HttpRequest.create(url));
         } catch (Exception e) {
-            return CompletableFuture.completedFuture(HttpResponse.create().withEntity("404"));
+            return CompletableFuture.completedFuture(HttpResponse.create().withEntity(NOT_FOUND));
         }
     }
 
@@ -170,17 +169,17 @@ public class HTTPServerAkka extends AllDirectives {
                                             if (parsedCount != 0) {
                                                 Future<Object> randomPort = Patterns.ask(storageActor, new GetRandomPort(Integer.toString(port)), TIMEOUT_MILLIS);
                                                 try {
-                                                    int reply = (int) Await.result(randomPort, Duration.create(parsedCount * 3, TimeUnit.SECONDS));
+                                                    int reply = (int) Await.result(randomPort, Duration.create(AWAIT_DURATION, TimeUnit.SECONDS));
                                                     return complete(fetchToServer(reply, url, parsedCount).toCompletableFuture().get());
                                                 } catch (Exception e) {
-                                                    return complete("Error -> " + e.toString());
+                                                    return complete(ERROR_MESSAGE + e.toString());
                                                 }
                                             }
                                             try {
                                                 return complete(fetch(url).toCompletableFuture().get());
                                             } catch (InterruptedException | ExecutionException e) {
                                                 e.printStackTrace();
-                                                return complete("Unable to connect to url");
+                                                return complete(URL_ERROR_MESSAGE);
                                             }
                                         }
                                 )
