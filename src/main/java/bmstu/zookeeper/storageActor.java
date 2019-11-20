@@ -12,6 +12,9 @@ public class storageActor extends AbstractActor {
     public Receive createReceive(){
         return ReceiveBuilder.create().match(ServerMSG.class, msg -> {
             serversPortList = msg.getServerPort();
+            for(String s : serversPortList){
+                System.out.println("Port -> " + s);
+            }
         }).build();
     }
 }

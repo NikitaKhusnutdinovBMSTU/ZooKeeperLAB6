@@ -65,7 +65,7 @@ public class httpAnonymize extends AllDirectives {
                             e.printStackTrace();
                         }
                         serversData.add(new String(data));
-                        System.out.println("[Server : " + s + ", data :" + new String(data) + "]");
+                        //System.out.println("[Server : " + s + ", data :" + new String(data) + "]");
                     }
                     storageActor.tell(new ServerMSG(serversData), ActorRef.noSender());
                 }
