@@ -170,7 +170,12 @@ public class HTTPServerAkka extends AllDirectives {
                                             int parsedCount = Integer.parseInt(count);
                                             System.out.println("WAS SENDED FROM " + Integer.toString(port) + " COUNT -> " + count);
                                             if (parsedCount != 0) {
-                                                
+                                                Future<Object> randomPort = Patterns.ask(storageActor, new GetRandomPort(Integer.toString(port)), 5000);
+                                                if (randomPort.isCompleted()){
+                                                    System.out.println(randomPort);
+                                                    System.out.println(randomPort.value());
+                                                    return complete(fetchToServer(Integer.parseInt(randomPort.toString()), url, parsedCount).toCompletableFuture().get());
+                                                }
                                             }
                                             try {
                                                 return complete(fetch(url).toCompletableFuture().get());
