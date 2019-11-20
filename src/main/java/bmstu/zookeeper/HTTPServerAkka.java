@@ -111,10 +111,10 @@ public class HTTPServerAkka extends AllDirectives {
         });
     }
 
-    CompletionStage<HttpResponse> fetchToServer(int port, String a, int parsedCount) {
+    CompletionStage<HttpResponse> fetchToServer(int port, String url, int parsedCount) {
         try {
             return http.singleRequest(
-                    HttpRequest.create("http://localhost:" + Integer.toString(port) + "/?" + "url=" + a + "&count=" +
+                    HttpRequest.create("http://localhost:" + Integer.toString(port) + "/?url=" + url + "&count=" +
                             Integer.toString(parsedCount - 1)));
         }catch(Exception e){
             return CompletableFuture.completedFuture(HttpResponse.create().withEntity("404"));
@@ -140,8 +140,8 @@ public class HTTPServerAkka extends AllDirectives {
                                             System.out.println("WAS SENDED FROM " + Integer.toString(port) + "COUNT ->" + count);
                                             if (parsedCount != 0) {
                                                 try {
-                                                    Future<Object> new_port = CompletableFuture.completedFuture(Patterns.ask(storageActor, new GetRandomPort("2020"), 5000));
-                                                    return complete(fetchToServer((int)new_port.get(), url, parsedCount).toCompletableFuture().get());
+                                                    Future<Object> new_port = CompletableFuture.completedFuture(Patterns.ask(storageActor, new GetRandomPort(Integer.toString(port)), 5000));
+                                                    return complete(fetchToServer(Integer.parseInt(new_port.get().toString()), url, parsedCount).toCompletableFuture().get());
                                                 } catch (InterruptedException e) {
                                                     e.printStackTrace();
                                                 } catch (ExecutionException e) {
