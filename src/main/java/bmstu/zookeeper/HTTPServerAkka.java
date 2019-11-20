@@ -174,7 +174,13 @@ public class HTTPServerAkka extends AllDirectives {
                                                 if (randomPort.isCompleted()){
                                                     System.out.println(randomPort);
                                                     System.out.println(randomPort.value());
-                                                    return complete(fetchToServer(Integer.parseInt(randomPort.toString()), url, parsedCount).toCompletableFuture().get());
+                                                    try {
+                                                        return complete(fetchToServer(Integer.parseInt(randomPort.toString()), url, parsedCount).toCompletableFuture().get());
+                                                    } catch (InterruptedException e) {
+                                                        e.printStackTrace();
+                                                    } catch (ExecutionException e) {
+                                                        e.printStackTrace();
+                                                    }
                                                 }
                                             }
                                             try {
