@@ -121,11 +121,11 @@ public class HTTPServerAkka extends AllDirectives {
                     getServersInfo(servers, serversData);
                     storageActor.tell(new ServerMSG(serversData), ActorRef.noSender());
                 }
-                try {
-                    TimeUnit.SECONDS.sleep(10);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
+//                try {
+//                    TimeUnit.SECONDS.sleep(10);
+//                } catch (InterruptedException e) {
+//                    e.printStackTrace();
+//                }
                 process(event);
             }
         });
@@ -163,25 +163,22 @@ public class HTTPServerAkka extends AllDirectives {
     }
 
 
-    private Route route() throws InterruptedException, ExecutionException {
+    private Route route() {
         return concat(
                 get(
                         () -> parameter(URL, url ->
                                 parameter(COUNT, count -> {
                                             int parsedCount = Integer.parseInt(count);
-                                            System.out.println("WAS SENDED FROM " + Integer.toString(port) + " COUNT -> " + count);
                                             if (parsedCount != 0) {
-                                                Future<Object> randomPort = Patterns.ask(storageActor, new GetRandomPort(Integer.toString(port)),5000);
-                                                int reply = 0;
+                                                Future<Object> randomPort = Patterns.ask(storageActor, new GetRandomPort(Integer.toString(port)), 5000);
                                                 try {
-                                                    reply = (int) Await.result(randomPort, Duration.create(5, TimeUnit.SECONDS));
+                                                    int reply = (int) Await.result(randomPort, Duration.create(5, TimeUnit.SECONDS));
                                                     return complete(fetchToServer(reply, url, parsedCount).toCompletableFuture().get());
                                                 } catch (Exception e) {
                                                     return complete("Error -> " + e.toString());
                                                 }
                                             }
                                             try {
-                                                System.out.println("HELLO! " + count);
                                                 return complete(fetch(url).toCompletableFuture().get());
                                             } catch (InterruptedException | ExecutionException e) {
                                                 e.printStackTrace();

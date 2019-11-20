@@ -17,9 +17,6 @@ public class StorageActor extends AbstractActor {
         return ReceiveBuilder.create().match(
                 ServerMSG.class,
                 msg -> {
-//                    for(String s: msg.getServerPort()){
-//                        System.out.println(s + "-------");
-//                    }
                     serversPortList = msg.getServerPort();
                 })
                 .match(
