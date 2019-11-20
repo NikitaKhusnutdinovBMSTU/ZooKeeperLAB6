@@ -7,6 +7,7 @@ import akka.actor.Props;
 import akka.http.javadsl.ConnectHttp;
 import akka.http.javadsl.Http;
 import akka.http.javadsl.ServerBinding;
+import akka.http.javadsl.marshallers.jackson.Jackson;
 import akka.http.javadsl.model.HttpRequest;
 import akka.http.javadsl.model.HttpResponse;
 import akka.http.javadsl.server.AllDirectives;
@@ -20,6 +21,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 import java.util.concurrent.*;
+import scala.concurrent.Future;
 
 public class HTTPServerAkka extends AllDirectives {
     private static int port;
@@ -138,13 +140,9 @@ public class HTTPServerAkka extends AllDirectives {
                                     int parsedCount = Integer.parseInt(count);
                                             System.out.println("WAS SENDED FROM " + Integer.toString(port) + " COUNT -> " + count);
                                             if (parsedCount != 0) {
-                                                try {
-                                                    Future<Object> new_port = CompletableFuture.completedFuture(Patterns.ask(storageActor, new GetRandomPort(Integer.toString(port)), 5000));
-                                                    return complete(fetchToServer(Integer.parseInt(new_port.get().toString()), url, parsedCount).toCompletableFuture().get());
-                                                } catch (InterruptedException | ExecutionException e) {
-                                                    e.printStackTrace();
-                                                    return complete("Exception with new_port");
-                                                }
+                                                Future<Object> new_port = Patterns.ask(storageActor, new GetRandomPort(Integer.toString(port)), 5000);
+                                                return completeOKWithFuture(new_port, Jackson.marshaller());
+
                                             }
                                             try {
                                                 return complete(fetch(url).toCompletableFuture().get());
