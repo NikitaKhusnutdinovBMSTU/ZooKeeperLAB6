@@ -28,6 +28,8 @@ import scala.concurrent.Await;
 import scala.concurrent.Future;
 import scala.concurrent.duration.Duration;
 
+import static org.apache.zookeeper.KeeperException.*;
+
 public class HTTPServerAkka extends AllDirectives {
     private static int port;
     private static ActorRef storageActor;
@@ -134,7 +136,10 @@ public class HTTPServerAkka extends AllDirectives {
     Children2Callback children2Callback = new Children2Callback() {
         @Override
         public void processResult(int rc, String path, Object ctx, List<String> children, Stat stat) {
-            
+            switch (Code.get(rc)){
+                case OK:
+                    
+            }
         }
     };
 
