@@ -85,10 +85,6 @@
             <artifactId>zookeeper</artifactId>
             <version>3.4.14</version>
         </dependency>
-        <dependency>
-            <groupId>akka.http.host-connection-pool.idle-timeout</groupId>
-            <artifactId>infinite</artifactId>
-        </dependency>
 
     </dependencies>
 
