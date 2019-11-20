@@ -87,7 +87,7 @@
         </dependency>
         <dependency>
             <groupId>akka.http.host-connection-pool.idle-timeout</groupId>
-            <artifactId></artifactId>
+            <artifactId>infinite</artifactId>
         </dependency>
 
     </dependencies>
