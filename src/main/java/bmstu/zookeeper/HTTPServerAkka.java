@@ -105,7 +105,7 @@ public class HTTPServerAkka extends AllDirectives {
                                                     e.printStackTrace();
                                                 }
                                             }
-                                            return complete();
+                                            return complete(")");
                                         }
                                 )
                         )
