@@ -15,7 +15,6 @@ import akka.pattern.Patterns;
 import akka.stream.ActorMaterializer;
 import akka.stream.javadsl.Flow;
 import org.apache.zookeeper.*;
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -99,7 +98,6 @@ public class HTTPServerAkka extends AllDirectives {
                             e.printStackTrace();
                         }
                         serversData.add(new String(data));
-                        //System.out.println("[Server : " + s + ", data :" + new String(data) + "]");
                     }
                     storageActor.tell(new ServerMSG(serversData), ActorRef.noSender());
                 }
