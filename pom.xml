@@ -93,7 +93,7 @@
         </dependency>
 
         <dependency>
-            <groupId>idle-</groupId>
+            <groupId>idle-timeout</groupId>
             <artifactId></artifactId>
         </dependency>
 
