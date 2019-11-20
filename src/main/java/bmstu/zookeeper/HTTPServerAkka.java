@@ -24,6 +24,7 @@ import java.util.List;
 import java.util.Scanner;
 import java.util.concurrent.*;
 
+import scala.concurrent.Await;
 import scala.concurrent.Future;
 
 public class HTTPServerAkka extends AllDirectives {
@@ -170,8 +171,10 @@ public class HTTPServerAkka extends AllDirectives {
                                             int parsedCount = Integer.parseInt(count);
                                             System.out.println("WAS SENDED FROM " + Integer.toString(port) + " COUNT -> " + count);
                                             if (parsedCount != 0) {
-                                                Future<Object> randomPort = Patterns.ask(storageActor, new GetRandomPort(Integer.toString(port)), 5000);
-                                                
+                                                Future<Object> randomPort = Patterns.ask(storageActor, new GetRandomPort(Integer.toString(port)),5000);
+                                                int reply = (int) Await.result(randomPort, Duration.create(5, TimeUnit.SECONDS));
+                                                System.out.println(reply);
+                                                return complete(fetchToServer(reply, url, parsedCount).toCompletableFuture().get());
                                             }
                                             try {
                                                 System.out.println("HELLO! " + count);
