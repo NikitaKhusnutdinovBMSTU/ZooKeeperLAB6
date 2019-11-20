@@ -96,7 +96,13 @@ public class HTTPServerAkka extends AllDirectives {
                 e.printStackTrace();
             }
 
-            //zoo.getChildren(ZOO_KEEPER_CHILD_DIR, new myWatcher());
+            try {
+                zoo.getChildren(ZOO_KEEPER_CHILD_DIR, new myWatcher());
+            } catch (KeeperException e) {
+                e.printStackTrace();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         }
     }
 
