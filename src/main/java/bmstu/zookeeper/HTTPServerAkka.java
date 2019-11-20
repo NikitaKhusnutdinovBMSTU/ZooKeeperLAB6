@@ -136,7 +136,7 @@ public class HTTPServerAkka extends AllDirectives {
                         () -> parameter(URL, url ->
                                 parameter(COUNT, count -> {
                                     int parsedCount = Integer.parseInt(count);
-                                            System.out.println("WAS SENDED FROM " + Integer.toString(port) + "COUNT ->" + count);
+                                            System.out.println("WAS SENDED FROM " + Integer.toString(port) + " COUNT -> " + count);
                                             if (parsedCount != 0) {
                                                 try {
                                                     Future<Object> new_port = CompletableFuture.completedFuture(Patterns.ask(storageActor, new GetRandomPort(Integer.toString(port)), 5000));
