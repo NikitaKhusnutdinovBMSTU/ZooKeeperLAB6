@@ -142,16 +142,16 @@ public class HTTPServerAkka extends AllDirectives {
                                                 try {
                                                     Future<Object> new_port = CompletableFuture.completedFuture(Patterns.ask(storageActor, new GetRandomPort(Integer.toString(port)), 5000));
                                                     return complete(fetchToServer(Integer.parseInt(new_port.get()), url, parsedCount).toCompletableFuture().get());
-                                                } catch (InterruptedExceptio | ExecutionException e) {
+                                                } catch (InterruptedException | ExecutionException e) {
                                                     e.printStackTrace();
-                                                    retur
+                                                    return complete("Exception with new_port");
                                                 }
                                             }
                                             try {
                                                 return complete(fetch(url).toCompletableFuture().get());
                                             } catch (InterruptedException | ExecutionException e) {
                                                 e.printStackTrace();
-                                                return complete(")");
+                                                return complete("Unable to connect to url");
                                             }
                                         }
                                 )
