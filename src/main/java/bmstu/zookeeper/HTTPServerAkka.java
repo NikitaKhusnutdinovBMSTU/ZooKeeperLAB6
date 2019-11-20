@@ -121,6 +121,11 @@ public class HTTPServerAkka extends AllDirectives {
                     getServersInfo(servers, serversData);
                     storageActor.tell(new ServerMSG(serversData), ActorRef.noSender());
                 }
+                try {
+                    TimeUnit.SECONDS.sleep(5);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
                 process(event);
             }
         });
