@@ -22,6 +22,7 @@ import java.util.Scanner;
 import java.util.concurrent.*;
 
 public class HTTPServerAkka extends AllDirectives {
+    private static int port;
     private static ZooKeeper zoo;
     private static CountDownLatch connSignal = new CountDownLatch(0);
     private static Http http;
@@ -39,6 +40,7 @@ public class HTTPServerAkka extends AllDirectives {
         ActorSystem system = ActorSystem.create(ROUTES);
 
         createZoo(PORT);
+        port = PORT;
 
         http = Http.get(system);
         final ActorMaterializer materializer = ActorMaterializer.create(system);
@@ -76,10 +78,10 @@ public class HTTPServerAkka extends AllDirectives {
         );
     }
 
-    CompletionStage<HttpResponse> fetch(String a, int parsedCount) {
+    CompletionStage<HttpResponse> fetch(int port, String a, int parsedCount) {
         try {
             return http.singleRequest(
-                    HttpRequest.create("http://localhost:2050/?" + "url=" + a + "&count=" +
+                    HttpRequest.create("http://localhost:" + Integer.toString(port) + "/?" + "url=" + a + "&count=" +
                             Integer.toString(parsedCount - 1)));
         }catch(Exception e){
             return CompletableFuture.completedFuture(HttpResponse.create().withEntity("404"));
@@ -93,32 +95,17 @@ public class HTTPServerAkka extends AllDirectives {
                 get(
                         () -> parameter(URL, url ->
                                 parameter(COUNT, count -> {
-                                    try {
-                                        zoo.exists("/servers", new Watcher() {
-                                            @Override
-                                            public void process(WatchedEvent event) {
-                                                System.out.println("event_worked_again");
-                                                if (event.getType() == Event.EventType.NodeChildrenChanged) {
-                                                    System.out.println("New children in the crew ->" + event.getPath());
-                                                }
-                                            }
-                                        });
-                                    } catch (KeeperException e) {
-                                        e.printStackTrace();
-                                    } catch (InterruptedException e) {
-                                        e.printStackTrace();
-                                    }
                                     int parsedCount = Integer.parseInt(count);
                                             if (parsedCount != 0) {
                                                 try {
-                                                    return complete(fetch(url, parsedCount).toCompletableFuture().get());
+                                                    return complete(fetch(port, url, parsedCount).toCompletableFuture().get());
                                                 } catch (InterruptedException e) {
                                                     e.printStackTrace();
                                                 } catch (ExecutionException e) {
                                                     e.printStackTrace();
                                                 }
                                             }
-                                            return complete(")");
+                                            return complete();
                                         }
                                 )
                         )
