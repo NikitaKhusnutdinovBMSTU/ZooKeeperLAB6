@@ -20,6 +20,7 @@ public class StorageActor extends AbstractActor {
                 .match(
                         GetRandomPort.class,
                         msg -> {
+                            System.out.println("haha");
                             Random rand = new Random();
                             int len = serversPortList.size();
                             int rand_idx = rand.nextInt(len);
