@@ -91,7 +91,7 @@ public class HTTPServerAkka extends AllDirectives {
     CompletionStage<HttpResponse> fetch(String url) {
         try {
             return http.singleRequest(
-                    HttpRequest.create(url);
+                    HttpRequest.create(url));
         }catch(Exception e){
             return CompletableFuture.completedFuture(HttpResponse.create().withEntity("404"));
         }
