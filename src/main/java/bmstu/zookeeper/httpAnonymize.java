@@ -46,38 +46,6 @@ public class httpAnonymize extends AllDirectives {
         ActorSystem system = ActorSystem.create(ROUTES);
         storageActor = system.actorOf(Props.create(storageActor.class));
 
-        zoo.getChildren("/servers", new Watcher() {
-            @Override
-            public void process(WatchedEvent event) {
-                if (event.getType() == Event.EventType.NodeChildrenChanged) {
-                    List<String> servers = null;
-                    try {
-                        servers = zoo.getChildren("/servers", true);
-                    } catch (KeeperException | InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                    List<String> serversData = new ArrayList<>();
-                    for(String s: servers){
-                        byte[] data = new byte[0];
-                        try {
-                            data = zoo.getData("/servers/" + s, false, null);
-                        } catch (KeeperException | InterruptedException e) {
-                            e.printStackTrace();
-                        }
-                        serversData.add(new String(data));
-                        //System.out.println("[Server : " + s + ", data :" + new String(data) + "]");
-                    }
-                    storageActor.tell(new ServerMSG(serversData), ActorRef.noSender());
-                }
-                try {
-                    TimeUnit.SECONDS.sleep(10);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-                process(event);
-            }
-        });
-
         Http http = Http.get(system);
         final ActorMaterializer materializer = ActorMaterializer.create(system);
 

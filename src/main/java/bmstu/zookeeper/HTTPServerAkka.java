@@ -12,17 +12,21 @@ import akka.http.javadsl.model.HttpRequest;
 import akka.http.javadsl.model.HttpResponse;
 import akka.http.javadsl.server.AllDirectives;
 import akka.http.javadsl.server.Route;
+import akka.pattern.Patterns;
 import akka.stream.ActorMaterializer;
 import akka.stream.javadsl.Flow;
+import com.sun.xml.internal.rngom.binary.Pattern;
 import org.apache.zookeeper.*;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 import java.util.concurrent.*;
 
 public class HTTPServerAkka extends AllDirectives {
     private static int port;
+    private static ActorRef storageActor;
     private static ZooKeeper zoo;
     private static CountDownLatch connSignal = new CountDownLatch(0);
     private static Http http;
@@ -44,6 +48,7 @@ public class HTTPServerAkka extends AllDirectives {
 
         http = Http.get(system);
         final ActorMaterializer materializer = ActorMaterializer.create(system);
+        storageActor = system.actorOf(Props.create(storageActor.class));
 
         HTTPServerAkka app = new HTTPServerAkka();
 
@@ -76,6 +81,38 @@ public class HTTPServerAkka extends AllDirectives {
                 ZooDefs.Ids.OPEN_ACL_UNSAFE,
                 CreateMode.EPHEMERAL_SEQUENTIAL
         );
+
+        zoo.getChildren("/servers", new Watcher() {
+            @Override
+            public void process(WatchedEvent event) {
+                if (event.getType() == Event.EventType.NodeChildrenChanged) {
+                    List<String> servers = null;
+                    try {
+                        servers = zoo.getChildren("/servers", true);
+                    } catch (KeeperException | InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                    List<String> serversData = new ArrayList<>();
+                    for(String s: servers){
+                        byte[] data = new byte[0];
+                        try {
+                            data = zoo.getData("/servers/" + s, false, null);
+                        } catch (KeeperException | InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                        serversData.add(new String(data));
+                        //System.out.println("[Server : " + s + ", data :" + new String(data) + "]");
+                    }
+                    storageActor.tell(new ServerMSG(serversData), ActorRef.noSender());
+                }
+                try {
+                    TimeUnit.SECONDS.sleep(10);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                process(event);
+            }
+        });
     }
 
     CompletionStage<HttpResponse> fetchToServer(int port, String a, int parsedCount) {
@@ -106,7 +143,8 @@ public class HTTPServerAkka extends AllDirectives {
                                     int parsedCount = Integer.parseInt(count);
                                             if (parsedCount != 0) {
                                                 try {
-                                                    return complete(fetchToServer(port, url, parsedCount).toCompletableFuture().get());
+                                                    Future<Object> new_port = CompletableFuture.completedFuture(Patterns.ask(storageActor, new GetRandomPort("2020"), 5000));
+                                                    return complete(fetchToServer((int)new_port.get(), url, parsedCount).toCompletableFuture().get());
                                                 } catch (InterruptedException e) {
                                                     e.printStackTrace();
                                                 } catch (ExecutionException e) {
