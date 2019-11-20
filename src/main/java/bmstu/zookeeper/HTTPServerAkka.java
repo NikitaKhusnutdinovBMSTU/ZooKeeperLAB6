@@ -171,15 +171,7 @@ public class HTTPServerAkka extends AllDirectives {
                                             System.out.println("WAS SENDED FROM " + Integer.toString(port) + " COUNT -> " + count);
                                             if (parsedCount != 0) {
                                                 Future<Object> randomPort = Patterns.ask(storageActor, new GetRandomPort(Integer.toString(port)), 5000);
-                                                while (!randomPort.isCompleted()) ;
-                                                System.out.println(randomPort);
-                                                System.out.println(randomPort.value());
-                                                try {
-                                                    return complete(fetchToServer(Integer.parseInt(randomPort.toString()), url, parsedCount).toCompletableFuture().get());
-                                                } catch (InterruptedException | ExecutionException e) {
-                                                    e.printStackTrace();
-                                                    return complete("Unable to connect to other proxy");
-                                                }
+                                                
                                             }
                                             try {
                                                 System.out.println("HELLO! " + count);
