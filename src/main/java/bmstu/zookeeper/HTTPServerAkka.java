@@ -16,6 +16,7 @@ import akka.pattern.Patterns;
 import akka.stream.ActorMaterializer;
 import akka.stream.javadsl.Flow;
 import org.apache.zookeeper.*;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -73,89 +74,121 @@ public class HTTPServerAkka extends AllDirectives {
         zoo = new ZooKeeper(
                 "127.0.0.1:2181",
                 2000,
-                a -> {}
-        );
-        zoo.create(
-                "/servers/" + Integer.toString(port),
-                Integer.toString(port).getBytes(),
-                ZooDefs.Ids.OPEN_ACL_UNSAFE,
-                CreateMode.EPHEMERAL_SEQUENTIAL
-        );
-
-        zoo.getChildren("/servers", new Watcher() {
-            @Override
-            public void process(WatchedEvent event) {
-                if (event.getType() == Event.EventType.NodeChildrenChanged) {
-                    List<String> servers = new ArrayList<>();
-                    try {
-                        servers = zoo.getChildren("/servers", true);
-                    } catch (KeeperException | InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                    List<String> serversData = new ArrayList<>();
-                    for(String s: servers){
-                        byte[] data = new byte[0];
+                new Watcher() {
+                    @Override
+                    public void process(WatchedEvent event) {
+                        List<String> servers = new ArrayList<>();
                         try {
-                            data = zoo.getData("/servers/" + s, false, null);
+                            servers = zoo.getChildren("/servers", true);
                         } catch (KeeperException | InterruptedException e) {
                             e.printStackTrace();
                         }
-                        serversData.add(new String(data));
+                        List<String> serversData = new ArrayList<>();
+                        for (String s : servers) {
+                            byte[] data = new byte[0];
+                            try {
+                                data = zoo.getData("/servers/" + s, false, null);
+                            } catch (KeeperException | InterruptedException e) {
+                                e.printStackTrace();
+                            }
+                            serversData.add(new String(data));
+                        }
+                        storageActor.tell(new ServerMSG(serversData), ActorRef.noSender());
+                        try {
+                            TimeUnit.SECONDS.sleep(10);
+                        } catch (
+                                InterruptedException e) {
+                            e.printStackTrace();
+                        }
                     }
-                    storageActor.tell(new ServerMSG(serversData), ActorRef.noSender());
                 }
-                try {
-                    TimeUnit.SECONDS.sleep(10);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-                process(event);
-            }
-        });
-    }
-
-    CompletionStage<HttpResponse> fetchToServer(int port, String url, int parsedCount) {
-        try {
-            return http.singleRequest(
-                    HttpRequest.create("http://localhost:" + Integer.toString(port) + "/?url=" + url + "&count=" +
-                            Integer.toString(parsedCount - 1)));
-        }catch(Exception e){
-            return CompletableFuture.completedFuture(HttpResponse.create().withEntity("404"));
-        }
-    }
-
-    CompletionStage<HttpResponse> fetch(String url) {
-        try {
-            return http.singleRequest(
-                    HttpRequest.create(url));
-        }catch(Exception e){
-            return CompletableFuture.completedFuture(HttpResponse.create().withEntity("404"));
-        }
-    }
-
-
-    private Route route() {
-        return concat(
-                get(
-                        () -> parameter(URL, url ->
-                                parameter(COUNT, count -> {
-                                    int parsedCount = Integer.parseInt(count);
-                                            System.out.println("WAS SENDED FROM " + Integer.toString(port) + " COUNT -> " + count);
-                                            if (parsedCount != 0) {
-                                                Future<Object> new_port = Patterns.ask(storageActor, new GetRandomPort(Integer.toString(port)), 5000);
-                                                return completeOKWithFuture(new_port, Jackson.marshaller());
-
-                                            }
-                                            try {
-                                                return complete(fetch(url).toCompletableFuture().get());
-                                            } catch (InterruptedException | ExecutionException e) {
-                                                e.printStackTrace();
-                                                return complete("Unable to connect to url");
-                                            }
-                                        }
-                                )
-                        )
-                )
         );
+        zoo.create(
+                "/servers/"+Integer.toString(port),
+                            Integer.toString(port).
+
+                    getBytes(),
+
+                    ZooDefs.Ids.OPEN_ACL_UNSAFE,
+                    CreateMode.EPHEMERAL_SEQUENTIAL
+        );
+
+        zoo.getChildren("/servers",new
+
+                    Watcher() {
+                        @Override
+                        public void process (WatchedEvent event){
+                            if (event.getType() == Event.EventType.NodeChildrenChanged) {
+                                List<String> servers = new ArrayList<>();
+                                try {
+                                    servers = zoo.getChildren("/servers", true);
+                                } catch (KeeperException | InterruptedException e) {
+                                    e.printStackTrace();
+                                }
+                                List<String> serversData = new ArrayList<>();
+                                for (String s : servers) {
+                                    byte[] data = new byte[0];
+                                    try {
+                                        data = zoo.getData("/servers/" + s, false, null);
+                                    } catch (KeeperException | InterruptedException e) {
+                                        e.printStackTrace();
+                                    }
+                                    serversData.add(new String(data));
+                                }
+                                storageActor.tell(new ServerMSG(serversData), ActorRef.noSender());
+                            }
+                            try {
+                                TimeUnit.SECONDS.sleep(10);
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                            }
+                            process(event);
+                        }
+                    });
+                }
+
+                CompletionStage < HttpResponse > fetchToServer( int port, String url,int parsedCount){
+            try {
+                return http.singleRequest(
+                        HttpRequest.create("http://localhost:" + Integer.toString(port) + "/?url=" + url + "&count=" +
+                                Integer.toString(parsedCount - 1)));
+            } catch (Exception e) {
+                return CompletableFuture.completedFuture(HttpResponse.create().withEntity("404"));
+            }
+        }
+
+        CompletionStage<HttpResponse> fetch (String url){
+            try {
+                return http.singleRequest(
+                        HttpRequest.create(url));
+            } catch (Exception e) {
+                return CompletableFuture.completedFuture(HttpResponse.create().withEntity("404"));
+            }
+        }
+
+
+        private Route route () {
+            return concat(
+                    get(
+                            () -> parameter(URL, url ->
+                                    parameter(COUNT, count -> {
+                                                int parsedCount = Integer.parseInt(count);
+                                                System.out.println("WAS SENDED FROM " + Integer.toString(port) + " COUNT -> " + count);
+                                                if (parsedCount != 0) {
+                                                    Future<Object> new_port = Patterns.ask(storageActor, new GetRandomPort(Integer.toString(port)), 5000);
+                                                    return completeOKWithFuture(new_port, Jackson.marshaller());
+
+                                                }
+                                                try {
+                                                    return complete(fetch(url).toCompletableFuture().get());
+                                                } catch (InterruptedException | ExecutionException e) {
+                                                    e.printStackTrace();
+                                                    return complete("Unable to connect to url");
+                                                }
+                                            }
+                                    )
+                            )
+                    )
+            );
+        }
     }
-}
