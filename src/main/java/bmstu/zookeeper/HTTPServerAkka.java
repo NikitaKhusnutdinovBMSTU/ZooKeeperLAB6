@@ -18,7 +18,6 @@ import akka.stream.javadsl.Flow;
 import org.apache.zookeeper.*;
 
 import java.io.IOException;
-import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -26,6 +25,7 @@ import java.util.concurrent.*;
 
 import scala.concurrent.Await;
 import scala.concurrent.Future;
+import scala.concurrent.duration.Duration;
 
 public class HTTPServerAkka extends AllDirectives {
     private static int port;
@@ -172,9 +172,13 @@ public class HTTPServerAkka extends AllDirectives {
                                             System.out.println("WAS SENDED FROM " + Integer.toString(port) + " COUNT -> " + count);
                                             if (parsedCount != 0) {
                                                 Future<Object> randomPort = Patterns.ask(storageActor, new GetRandomPort(Integer.toString(port)),5000);
-                                                int reply = (int) Await.result(randomPort, Duration.create(5, TimeUnit.SECONDS));
-                                                System.out.println(reply);
-                                                return complete(fetchToServer(reply, url, parsedCount).toCompletableFuture().get());
+                                                int reply = 0;
+                                                try {
+                                                    reply = (int) Await.result(randomPort, Duration.create(5, TimeUnit.SECONDS));
+                                                    return complete(fetchToServer(reply, url, parsedCount).toCompletableFuture().get());
+                                                } catch (Exception e) {
+                                                    return complete("Error -> " + e.toString());
+                                                }
                                             }
                                             try {
                                                 System.out.println("HELLO! " + count);
