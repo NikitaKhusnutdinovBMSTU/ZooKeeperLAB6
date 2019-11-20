@@ -77,31 +77,34 @@ public class HTTPServerAkka extends AllDirectives {
 
     }
 
-    
+    public static class myWatcher implements Watcher {
+
+        @Override
+        public void process(WatchedEvent event) {
+            List<String> servers = new ArrayList<>();
+            try {
+                servers = zoo.getChildren(ZOO_KEEPER_SERVER_DIR, new myWatcher());
+            } catch (KeeperException | InterruptedException e) {
+                e.printStackTrace();
+            }
+            List<String> serversData = new ArrayList<>();
+            getServersInfo(servers, serversData);
+            storageActor.tell(new ServerMSG(serversData), ActorRef.noSender());
+            try {
+                TimeUnit.SECONDS.sleep(10);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+
+            //zoo.getChildren(ZOO_KEEPER_CHILD_DIR, new myWatcher());
+        }
+    }
 
     private static void createZoo() throws IOException, KeeperException, InterruptedException {
         zoo = new ZooKeeper(
                 ZOO_KEEPER_HOST,
                 TIMEOUT_MILLIS,
-                new Watcher() {
-                    @Override
-                    public void process(WatchedEvent event) {
-                        List<String> servers = new ArrayList<>();
-                        try {
-                            servers = zoo.getChildren(ZOO_KEEPER_SERVER_DIR, true);
-                        } catch (KeeperException | InterruptedException e) {
-                            e.printStackTrace();
-                        }
-                        List<String> serversData = new ArrayList<>();
-                        getServersInfo(servers, serversData);
-                        storageActor.tell(new ServerMSG(serversData), ActorRef.noSender());
-                        try {
-                            TimeUnit.SECONDS.sleep(10);
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                }
+                new myWatcher()
         );
         zoo.create(
                 ZOO_KEEPER_CHILD_DIR + Integer.toString(port),
@@ -110,28 +113,8 @@ public class HTTPServerAkka extends AllDirectives {
                 CreateMode.EPHEMERAL_SEQUENTIAL
         );
 
-        zoo.getChildren(ZOO_KEEPER_SERVER_DIR, new Watcher() {
-            @Override
-            public void process(WatchedEvent event) {
-                if (event.getType() == Event.EventType.NodeChildrenChanged) {
-                    List<String> servers = new ArrayList<>();
-                    try {
-                        servers = zoo.getChildren(ZOO_KEEPER_SERVER_DIR, true);
-                    } catch (KeeperException | InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                    List<String> serversData = new ArrayList<>();
-                    getServersInfo(servers, serversData);
-                    storageActor.tell(new ServerMSG(serversData), ActorRef.noSender());
-                }
-                try {
-                    TimeUnit.SECONDS.sleep(5);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-                process(event);
-            }
-        });
+        zoo.getChildren(ZOO_KEEPER_SERVER_DIR, new myWatcher());
+
     }
 
 //        static Children2Callback children2Callback = new Children2Callback() {
