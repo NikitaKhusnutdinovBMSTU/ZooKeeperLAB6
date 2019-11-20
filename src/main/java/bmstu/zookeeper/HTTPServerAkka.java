@@ -168,8 +168,10 @@ public class HTTPServerAkka extends AllDirectives {
                                             System.out.println("WAS SENDED FROM " + Integer.toString(port) + " COUNT -> " + count);
                                             if (parsedCount != 0) {
                                                 Future<Object> new_port = Patterns.ask(storageActor, new GetRandomPort(Integer.toString(port)), 5000);
-
-                                                return fetchToServer(CompletableFuture.completedFuture(new_port).get(), url, parsedCount);
+                                                CompletionStage<Integer> kek = CompletableFuture.completedFuture(new_port).thenCompose( a -> {
+                                                    a.value()
+                                                });
+                                                return fetchToServer(, url, parsedCount);
                                                 //return completeOKWithFuture(fetchToServer(new_port, url, parsedCount), Jackson.marshaller());
 
                                             }
