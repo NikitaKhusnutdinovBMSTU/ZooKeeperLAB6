@@ -21,6 +21,9 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 import java.util.concurrent.*;
+
+import org.apache.zookeeper.AsyncCallback.Children2Callback;
+import org.apache.zookeeper.data.Stat;
 import scala.concurrent.Await;
 import scala.concurrent.Future;
 import scala.concurrent.duration.Duration;
@@ -127,6 +130,13 @@ public class HTTPServerAkka extends AllDirectives {
             }
         });
     }
+
+    Children2Callback children2Callback = new Children2Callback() {
+        @Override
+        public void processResult(int rc, String path, Object ctx, List<String> children, Stat stat) {
+            
+        }
+    };
 
     private static void getServersInfo(List<String> servers, List<String> serversData) {
         for (String s : servers) {
