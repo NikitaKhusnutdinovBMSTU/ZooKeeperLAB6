@@ -77,6 +77,7 @@ public class HTTPServerAkka extends AllDirectives {
                 new Watcher() {
                     @Override
                     public void process(WatchedEvent event) {
+                        System.out.println("ya tut");
                         List<String> servers = new ArrayList<>();
                         try {
                             servers = zoo.getChildren("/servers", true);
@@ -108,6 +109,7 @@ public class HTTPServerAkka extends AllDirectives {
         zoo.getChildren("/servers", new Watcher() {
             @Override
             public void process(WatchedEvent event) {
+                if (event.getType() == Event.EventType.NodeChildrenChanged) {
                     List<String> servers = new ArrayList<>();
                     try {
                         servers = zoo.getChildren("/servers", true);
@@ -117,6 +119,7 @@ public class HTTPServerAkka extends AllDirectives {
                     List<String> serversData = new ArrayList<>();
                     getServersInfo(servers, serversData);
                     storageActor.tell(new ServerMSG(serversData), ActorRef.noSender());
+                }
                 try {
                     TimeUnit.SECONDS.sleep(10);
                 } catch (InterruptedException e) {
