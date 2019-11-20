@@ -25,7 +25,6 @@ public class HTTPServerAkka extends AllDirectives {
     private static ZooKeeper zoo;
     private static CountDownLatch connSignal = new CountDownLatch(0);
     private static Http http;
-    private static ActorRef storageActor;
     private static final String ROUTES = "routes";
     private static final String LOCALHOST = "localhost";
     private static final String SERVER_INFO = "Server online on localhost:8080/\n PRESS ANY KEY TO STOP";
@@ -38,7 +37,6 @@ public class HTTPServerAkka extends AllDirectives {
         Scanner in = new Scanner(System.in);
         int PORT = in.nextInt();
         ActorSystem system = ActorSystem.create(ROUTES);
-        storageActor = system.actorOf(Props.create(storageActor.class));
 
         createZoo(PORT);
 
@@ -121,8 +119,6 @@ public class HTTPServerAkka extends AllDirectives {
                                                 }
                                             }
                                             return complete(")");
-
-                                            //return completeOKWithFuture(result, Jackson.marshaller());
                                         }
                                 )
                         )

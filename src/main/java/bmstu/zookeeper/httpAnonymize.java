@@ -2,7 +2,9 @@ package bmstu.zookeeper;
 
 
 import akka.NotUsed;
+import akka.actor.ActorRef;
 import akka.actor.ActorSystem;
+import akka.actor.Props;
 import akka.http.javadsl.ConnectHttp;
 import akka.http.javadsl.Http;
 import akka.http.javadsl.ServerBinding;
@@ -15,6 +17,7 @@ import akka.stream.javadsl.Flow;
 import org.apache.zookeeper.*;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CompletionStage;
 import java.util.concurrent.ExecutionException;
@@ -41,7 +44,7 @@ public class httpAnonymize extends AllDirectives {
                 event -> {}
         );
         ActorSystem system = ActorSystem.create(ROUTES);
-
+        storageActor = system.actorOf(Props.create(storageActor.class));
 
         zoo.getChildren("/servers", new Watcher() {
             @Override
@@ -53,6 +56,7 @@ public class httpAnonymize extends AllDirectives {
                     } catch (KeeperException | InterruptedException e) {
                         e.printStackTrace();
                     }
+                    List<String> serversData = new ArrayList<>();
                     for(String s: servers){
                         byte[] data = new byte[0];
                         try {
@@ -60,8 +64,10 @@ public class httpAnonymize extends AllDirectives {
                         } catch (KeeperException | InterruptedException e) {
                             e.printStackTrace();
                         }
+                        serversData.add(new String(data));
                         System.out.println("[Server : " + s + ", data :" + new String(data) + "]");
                     }
+                    storageActor.tell(new ServerMSG(serversData), ActorRef.noSender());
                 }
                 try {
                     TimeUnit.SECONDS.sleep(10);
