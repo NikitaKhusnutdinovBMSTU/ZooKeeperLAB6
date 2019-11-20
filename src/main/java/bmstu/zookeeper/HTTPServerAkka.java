@@ -78,7 +78,7 @@ public class HTTPServerAkka extends AllDirectives {
         );
     }
 
-    CompletionStage<HttpResponse> fetch(int port, String a, int parsedCount) {
+    CompletionStage<HttpResponse> fetchToServer(int port, String a, int parsedCount) {
         try {
             return http.singleRequest(
                     HttpRequest.create("http://localhost:" + Integer.toString(port) + "/?" + "url=" + a + "&count=" +
@@ -88,6 +88,14 @@ public class HTTPServerAkka extends AllDirectives {
         }
     }
 
+    CompletionStage<HttpResponse> fetch(String url) {
+        try {
+            return http.singleRequest(
+                    HttpRequest.create(url);
+        }catch(Exception e){
+            return CompletableFuture.completedFuture(HttpResponse.create().withEntity("404"));
+        }
+    }
 
 
     private Route route() {
@@ -98,12 +106,19 @@ public class HTTPServerAkka extends AllDirectives {
                                     int parsedCount = Integer.parseInt(count);
                                             if (parsedCount != 0) {
                                                 try {
-                                                    return complete(fetch(port, url, parsedCount).toCompletableFuture().get());
+                                                    return complete(fetchToServer(port, url, parsedCount).toCompletableFuture().get());
                                                 } catch (InterruptedException e) {
                                                     e.printStackTrace();
                                                 } catch (ExecutionException e) {
                                                     e.printStackTrace();
                                                 }
+                                            }
+                                            try {
+                                                return complete(fetch(url).toCompletableFuture().get());
+                                            } catch (InterruptedException e) {
+                                                e.printStackTrace();
+                                            } catch (ExecutionException e) {
+                                                e.printStackTrace();
                                             }
                                             return complete(")");
                                         }
