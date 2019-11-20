@@ -37,27 +37,25 @@ public class HTTPServerAkka extends AllDirectives {
     private static final String SERVER_INFO = "Server online on localhost:8080/\n PRESS ANY KEY TO STOP";
     private static final String URL = "url";
     private static final String COUNT = "count";
+    private static final String ZOO_KEEPER_DIR = "/servers";
     private static final int TIMEOUT_MILLIS = 5000;
 
     public static void main(String[] args) throws Exception {
 
         Scanner in = new Scanner(System.in);
-        int PORT = in.nextInt();
+        int port = in.nextInt();
+
         ActorSystem system = ActorSystem.create(ROUTES);
         storageActor = system.actorOf(Props.create(StorageActor.class));
-
-        createZoo(PORT);
-        port = PORT;
-
+        createZoo();
         http = Http.get(system);
+
         final ActorMaterializer materializer = ActorMaterializer.create(system);
-
         HTTPServerAkka app = new HTTPServerAkka();
-
         final Flow<HttpRequest, HttpResponse, NotUsed> routeFlow = app.route().flow(system, materializer);
         final CompletionStage<ServerBinding> binding = http.bindAndHandle(
                 routeFlow,
-                ConnectHttp.toHost(LOCALHOST, PORT),
+                ConnectHttp.toHost(LOCALHOST, port),
                 materializer
         );
 
@@ -71,7 +69,7 @@ public class HTTPServerAkka extends AllDirectives {
     }
 
 
-    private static void createZoo(int port) throws IOException, KeeperException, InterruptedException {
+    private static void createZoo() throws IOException, KeeperException, InterruptedException {
         zoo = new ZooKeeper(
                 "127.0.0.1:2181",
                 2000,
