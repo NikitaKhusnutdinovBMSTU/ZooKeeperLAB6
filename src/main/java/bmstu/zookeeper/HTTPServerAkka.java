@@ -98,7 +98,7 @@ public class HTTPServerAkka extends AllDirectives {
                                     int parsedCount = Integer.parseInt(count);
                                             if (parsedCount != 0) {
                                                 try {
-                                                    return complete(fetch(port, url, parsedCount).toCompletableFuture().get() + ")");
+                                                    return complete(fetch(port, url, parsedCount).toCompletableFuture().get() + "*");
                                                 } catch (InterruptedException e) {
                                                     e.printStackTrace();
                                                 } catch (ExecutionException e) {
