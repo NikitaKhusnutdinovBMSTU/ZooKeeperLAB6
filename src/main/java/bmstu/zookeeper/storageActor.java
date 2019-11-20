@@ -18,10 +18,10 @@ public class storageActor extends AbstractActor {
         return ReceiveBuilder.create().match(ServerMSG.class, msg -> {
             serversPortList = msg.getServerPort();
             for(String s : serversPortList){
-                System.out.println("Port -> " + s);
+                //System.out.println("Port -> " + s);
             }
             if (serversPortList.size() == 0){
-                System.out.println("ZERO SERVERS");
+                //System.out.println("ZERO SERVERS");
             }
         }).match(GetRandomPort.class, msg -> {
             Random rand = new Random();
