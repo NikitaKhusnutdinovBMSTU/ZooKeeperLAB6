@@ -82,7 +82,7 @@ public class HTTPServerAkka extends AllDirectives {
             @Override
             public void process(WatchedEvent event) {
                 if (event.getType() == Event.EventType.NodeChildrenChanged) {
-                    List<String> servers = null;
+                    List<String> servers = new ArrayList<>();
                     try {
                         servers = zoo.getChildren("/servers", true);
                     } catch (KeeperException | InterruptedException e) {
