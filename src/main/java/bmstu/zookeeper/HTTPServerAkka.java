@@ -184,7 +184,7 @@ public class HTTPServerAkka extends AllDirectives {
                                                 }
                                             }
                                             try {
-                                                System.out.println("HELLO!");
+                                                System.out.println("HELLO! " + count);
                                                 return complete(fetch(url).toCompletableFuture().get());
                                             } catch (InterruptedException | ExecutionException e) {
                                                 e.printStackTrace();
