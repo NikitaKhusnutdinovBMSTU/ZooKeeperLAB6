@@ -90,8 +90,7 @@ public class HTTPServerAkka extends AllDirectives {
                         storageActor.tell(new ServerMSG(serversData), ActorRef.noSender());
                         try {
                             TimeUnit.SECONDS.sleep(10);
-                        } catch (
-                                InterruptedException e) {
+                        } catch (InterruptedException e) {
                             e.printStackTrace();
                         }
                     }
