@@ -2,9 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="36f44e9b-cd20-4222-9d17-9b105100cf9a" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/src/main/java/bmstu/zookeeper/GetRandomPort.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/bmstu/zookeeper/GetRandomPort.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/bmstu/zookeeper/HTTPServerAkka.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/bmstu/zookeeper/HTTPServerAkka.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/bmstu/zookeeper/httpAnonymize.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/bmstu/zookeeper/httpAnonymize.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/bmstu/zookeeper/storageActor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/bmstu/zookeeper/storageActor.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
@@ -46,13 +44,13 @@
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
           <entry key="dummy" value="44" />
-          <entry key="java" value="6463" />
+          <entry key="java" value="6607" />
           <entry key="xml" value="5" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="JAVA" value="6463" />
+          <entry key="JAVA" value="6607" />
           <entry key="PLAIN_TEXT" value="44" />
           <entry key="XML" value="5" />
         </counts>
@@ -82,11 +80,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/bmstu/zookeeper/HTTPServerAkka.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="205">
-              <caret line="146" column="102" selection-start-line="146" selection-start-column="102" selection-end-line="146" selection-end-column="102" />
+            <state relative-caret-position="76">
+              <caret line="143" column="128" lean-forward="true" selection-start-line="143" selection-start-column="128" selection-end-line="143" selection-end-column="128" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -94,11 +92,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/bmstu/zookeeper/storageActor.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="183">
-              <caret line="27" column="59" selection-start-line="27" selection-start-column="59" selection-end-line="27" selection-end-column="59" />
+            <state relative-caret-position="252">
+              <caret line="31" selection-start-line="31" selection-end-line="31" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -150,8 +148,8 @@
         <option value="$PROJECT_DIR$/src/main/java/bmstu/zookeeper/ServerMSG.java" />
         <option value="$PROJECT_DIR$/src/main/java/bmstu/zookeeper/httpAnonymize.java" />
         <option value="$PROJECT_DIR$/src/main/java/bmstu/zookeeper/GetRandomPort.java" />
-        <option value="$PROJECT_DIR$/src/main/java/bmstu/zookeeper/HTTPServerAkka.java" />
         <option value="$PROJECT_DIR$/src/main/java/bmstu/zookeeper/storageActor.java" />
+        <option value="$PROJECT_DIR$/src/main/java/bmstu/zookeeper/HTTPServerAkka.java" />
       </list>
     </option>
   </component>
@@ -173,7 +171,8 @@
     </treeState>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="y" value="23" />
+    <option name="x" value="-134" />
+    <option name="y" value="92" />
     <option name="width" value="1331" />
     <option name="height" value="680" />
   </component>
@@ -235,7 +234,7 @@
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1574251165403" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1574252328331" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
     <property name="project.structure.last.edited" value="Modules" />
@@ -341,15 +340,15 @@
       <updated>1574081953557</updated>
       <workItem from="1574081955089" duration="14776000" />
       <workItem from="1574167691424" duration="12370000" />
-      <workItem from="1574249757566" duration="2549000" />
+      <workItem from="1574249757566" duration="2785000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="29695000" />
+    <option name="totallyTimeSpent" value="29931000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="23" width="1331" height="680" extended-state="0" />
+    <frame x="-134" y="92" width="1331" height="680" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.23894492" />
@@ -394,7 +393,7 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/bmstu/zookeeper/HTTPServerAkka.java</url>
-          <line>144</line>
+          <line>145</line>
           <properties />
           <option name="timeStamp" value="2" />
         </line-breakpoint>
@@ -430,16 +429,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/bmstu/zookeeper/HTTPServerAkka.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="205">
-          <caret line="146" column="102" selection-start-line="146" selection-start-column="102" selection-end-line="146" selection-end-column="102" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/bmstu/zookeeper/ServerMSG.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="105">
@@ -449,8 +438,18 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/bmstu/zookeeper/storageActor.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="183">
-          <caret line="27" column="59" selection-start-line="27" selection-start-column="59" selection-end-line="27" selection-end-column="59" />
+        <state relative-caret-position="252">
+          <caret line="31" selection-start-line="31" selection-end-line="31" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/bmstu/zookeeper/HTTPServerAkka.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="76">
+          <caret line="143" column="128" lean-forward="true" selection-start-line="143" selection-start-column="128" selection-end-line="143" selection-end-column="128" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>

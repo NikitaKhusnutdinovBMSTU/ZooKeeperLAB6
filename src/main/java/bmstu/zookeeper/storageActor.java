@@ -6,6 +6,7 @@ import akka.japi.pf.ReceiveBuilder;
 import javafx.scene.SubScene;
 
 import java.util.List;
+import java.util.Random;
 
 import static java.lang.StrictMath.random;
 
@@ -23,9 +24,10 @@ public class storageActor extends AbstractActor {
                 System.out.println("ZERO SERVERS");
             }
         }).match(GetRandomPort.class, msg -> {
+            Random rand = new Random();
             int len = serversPortList.size();
-            double rand_idx = StrictMath.rint(len);
-            getSender().tell(serversPortList.get(rand_idx), ActorRef.noSender());
+            int rand_idx = rand.nextInt(len);
+            getSender().tell(Integer.parseInt(serversPortList.get(rand_idx)), ActorRef.noSender());
         }).build();
     }
 }
