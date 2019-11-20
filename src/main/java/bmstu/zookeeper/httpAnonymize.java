@@ -29,6 +29,7 @@ public class httpAnonymize extends AllDirectives {
     private static int PORT = 8080;
     private static final String URL = "url";
     private static final String COUNT = "count";
+    private static ActorRef storageActor;
     private static final int TIMEOUT_MILLIS = 5000;
 
 
@@ -37,15 +38,7 @@ public class httpAnonymize extends AllDirectives {
         zoo = new ZooKeeper(
                 "127.0.0.1:2181",
                 2000,
-                new Watcher() {
-                    @Override
-                    public void process(WatchedEvent event) {
-                        if (event.getType() == Event.EventType.NodeChildrenChanged) {
-                            System.out.println("NODE WAS CREATED");
-                        }
-                        process(event);
-                    }
-                }
+                event -> {}
         );
         ActorSystem system = ActorSystem.create(ROUTES);
 
