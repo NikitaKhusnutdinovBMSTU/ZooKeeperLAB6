@@ -16,14 +16,11 @@ import akka.pattern.Patterns;
 import akka.stream.ActorMaterializer;
 import akka.stream.javadsl.Flow;
 import org.apache.zookeeper.*;
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 import java.util.concurrent.*;
-
-
 import scala.concurrent.Future;
 
 public class HTTPServerAkka extends AllDirectives {
@@ -171,7 +168,9 @@ public class HTTPServerAkka extends AllDirectives {
                                             System.out.println("WAS SENDED FROM " + Integer.toString(port) + " COUNT -> " + count);
                                             if (parsedCount != 0) {
                                                 Future<Object> new_port = Patterns.ask(storageActor, new GetRandomPort(Integer.toString(port)), 5000);
-                                                return completeOKWithFuture(new_port, Jackson.marshaller());
+                                                CompletableFuture.completedFuture(new_port).get();
+                                                return fetchToServer(new_port, url, parsedCount);
+                                                //return completeOKWithFuture(fetchToServer(new_port, url, parsedCount), Jackson.marshaller());
 
                                             }
                                             try {
