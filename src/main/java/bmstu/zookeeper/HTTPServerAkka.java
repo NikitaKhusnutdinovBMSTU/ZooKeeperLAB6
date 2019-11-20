@@ -25,7 +25,6 @@ public class HTTPServerAkka extends AllDirectives {
     private static int port;
     private static ActorRef storageActor;
     private static ZooKeeper zoo;
-    private static CountDownLatch connSignal = new CountDownLatch(0);
     private static Http http;
     private static final String ROUTES = "routes";
     private static final String LOCALHOST = "localhost";

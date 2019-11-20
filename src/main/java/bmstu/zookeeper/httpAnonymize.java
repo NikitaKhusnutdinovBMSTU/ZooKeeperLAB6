@@ -39,6 +39,11 @@ public class httpAnonymize extends AllDirectives {
                 2000,
                 event -> {}
         );
+
+//        zoo.create("/servers", "parent".getBytes(),
+//                ZooDefs.Ids.OPEN_ACL_UNSAFE,
+//                CreateMode.PERSISTENT);
+
         ActorSystem system = ActorSystem.create(ROUTES);
         storageActor = system.actorOf(Props.create(StorageActor.class));
 
