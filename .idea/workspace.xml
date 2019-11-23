@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="36f44e9b-cd20-4222-9d17-9b105100cf9a" name="Default Changelist" comment="" />
+    <list default="true" id="36f44e9b-cd20-4222-9d17-9b105100cf9a" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/src/main/java/bmstu/zookeeper/HTTPServerAkka.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/bmstu/zookeeper/HTTPServerAkka.java" afterDir="false" />
+    </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/target/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -45,13 +47,13 @@
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
           <entry key="dummy" value="45" />
-          <entry key="java" value="9440" />
+          <entry key="java" value="9448" />
           <entry key="xml" value="38" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="JAVA" value="9440" />
+          <entry key="JAVA" value="9448" />
           <entry key="PLAIN_TEXT" value="45" />
           <entry key="XML" value="38" />
         </counts>
@@ -107,8 +109,11 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/bmstu/zookeeper/HTTPServerAkka.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-288">
-              <caret line="17" selection-start-line="17" selection-end-line="17" />
+            <state relative-caret-position="623">
+              <caret line="144" column="49" selection-start-line="144" selection-start-column="49" selection-end-line="144" selection-end-column="49" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -248,7 +253,7 @@
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1574496338546" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1574496635414" />
     <property name="extract.method.default.visibility" value="private" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
@@ -356,15 +361,16 @@
       <updated>1574081953557</updated>
       <workItem from="1574081955089" duration="14776000" />
       <workItem from="1574167691424" duration="12370000" />
-      <workItem from="1574249757566" duration="22720000" />
+      <workItem from="1574249757566" duration="23817000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="49866000" />
+    <option name="totallyTimeSpent" value="50963000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1280" height="800" extended-state="0" />
+    <editor active="true" />
     <layout>
       <window_info content_ui="combo" id="Project" order="0" weight="0.24878837" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
@@ -375,7 +381,7 @@
       <window_info id="Favorites" order="6" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32913387" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.5283165" visible="true" weight="0.2369863" />
+      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.5283165" weight="0.2369863" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -393,8 +399,8 @@
       <window_info anchor="right" id="Database" order="5" />
       <window_info anchor="right" id="Theme Preview" order="6" />
       <window_info anchor="right" id="Palette&#9;" order="7" />
-      <window_info anchor="right" id="Maven Projects" order="8" sideWeight="0.49775785" weight="0.32971296" />
-      <window_info anchor="right" id="Coverage" order="9" sideWeight="0.50224215" side_tool="true" weight="0.3072149" />
+      <window_info anchor="right" id="Coverage" order="8" sideWeight="0.50224215" side_tool="true" weight="0.3072149" />
+      <window_info active="true" anchor="right" id="Maven Projects" order="9" sideWeight="0.49775785" visible="true" weight="0.32956383" />
     </layout>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -476,8 +482,11 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/bmstu/zookeeper/HTTPServerAkka.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-288">
-          <caret line="17" selection-start-line="17" selection-end-line="17" />
+        <state relative-caret-position="623">
+          <caret line="144" column="49" selection-start-line="144" selection-start-column="49" selection-end-line="144" selection-end-column="49" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

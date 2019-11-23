@@ -36,10 +36,8 @@ public class HTTPServerAkka extends AllDirectives {
     private static final String ZOO_KEEPER_SERVER_DIR = "/servers";
     private static final String ZOO_KEEPER_CHILD_DIR = "/servers/";
     private static final String NOT_FOUND = "404";
-    private static final String ERROR_MESSAGE = "Error -> ";
     private static final String URL_ERROR_MESSAGE = "Unable to connect to url";
     private static final int TIMEOUT_MILLIS = 5000;
-    private static final int AWAIT_DURATION = 20;
 
     public static void main(String[] args) throws Exception {
 
@@ -69,7 +67,7 @@ public class HTTPServerAkka extends AllDirectives {
 
     }
 
-    public static class updWatcher implements Watcher {
+    public static class UpdWatcher implements Watcher {
 
         @Override
         public void process(WatchedEvent event) {
@@ -89,7 +87,7 @@ public class HTTPServerAkka extends AllDirectives {
         zoo = new ZooKeeper(
                 ZOO_KEEPER_HOST,
                 TIMEOUT_MILLIS,
-                new updWatcher()
+                new UpdWatcher()
         );
         zoo.create(
                 ZOO_KEEPER_CHILD_DIR + Integer.toString(port),
@@ -98,7 +96,7 @@ public class HTTPServerAkka extends AllDirectives {
                 CreateMode.EPHEMERAL
         );
 
-        zoo.getChildren(ZOO_KEEPER_SERVER_DIR, new updWatcher());
+        zoo.getChildren(ZOO_KEEPER_SERVER_DIR, new UpdWatcher());
 
     }
 
@@ -142,7 +140,7 @@ public class HTTPServerAkka extends AllDirectives {
                                 parameter(COUNT, count -> {
                                             int parsedCount = Integer.parseInt(count);
                                             if (parsedCount != 0) {
-                                                CompletionStage<HttpResponse> response = Patterns.ask(storageActor, new GetRandomPort(Integer.toString(port)), java.time.Duration.ofMillis(5000))
+                                                CompletionStage<HttpResponse> response = Patterns.ask(storageActor, new GetRandomPort(Integer.toString(port)), java.time.Duration.ofMillis(TIMEOUT_MILLIS))
                                                         .thenCompose(req ->
                                                                 fetchToServer((int) req, url, parsedCount)
                                                         );
