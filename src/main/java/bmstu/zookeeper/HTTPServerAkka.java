@@ -146,22 +146,22 @@ public class HTTPServerAkka extends AllDirectives {
                 get(
                         () -> parameter(URL, url ->
                                 parameter(COUNT, count -> {
-                                    int parsedCount = Integer.parseInt(count);
-                                    if (parsedCount != 0) {
-                                        CompletionStage<HttpResponse> response = Patterns.ask(storageActor, new GetRandomPort(Integer.toString(port)), java.time.Duration.ofMillis(5000))
-                                                .thenCompose(req ->
-                                            fetchToServer((int) req, url, parsedCount)
-                                        );
-                                        return completeWithFuture(response);
-                                        try {
-                                            return complete(fetch(url).toCompletableFuture().get());
-                                        } catch (InterruptedException | ExecutionException e) {
-                                            e.printStackTrace();
-                                            return complete(URL_ERROR_MESSAGE);
-                                        }
-                                    }
+                                            int parsedCount = Integer.parseInt(count);
+                                            if (parsedCount != 0) {
+                                                CompletionStage<HttpResponse> response = Patterns.ask(storageActor, new GetRandomPort(Integer.toString(port)), java.time.Duration.ofMillis(5000))
+                                                        .thenCompose(req ->
+                                                                fetchToServer((int) req, url, parsedCount)
+                                                        );
+                                                return completeWithFuture(response);
+                                            }
+                                            try {
+                                                return complete(fetch(url).toCompletableFuture().get());
+                                            } catch (InterruptedException | ExecutionException e) {
+                                                e.printStackTrace();
+                                                return complete(URL_ERROR_MESSAGE);
+                                            }
 
-                                }
+                                        }
                                 )
                         )
                 )
