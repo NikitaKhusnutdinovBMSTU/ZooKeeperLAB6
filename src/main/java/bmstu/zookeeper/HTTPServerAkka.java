@@ -20,6 +20,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 import java.util.concurrent.*;
+import java.util.regex.Pattern;
+
 import scala.concurrent.Await;
 import scala.concurrent.Future;
 import scala.concurrent.duration.Duration;
@@ -145,14 +147,10 @@ public class HTTPServerAkka extends AllDirectives {
                                 parameter(COUNT, count -> {
                                             int parsedCount = Integer.parseInt(count);
                                             if (parsedCount != 0) {
-                                                Future<Object> randomPort = Patterns.ask(storageActor, new GetRandomPort(Integer.toString(port)), TIMEOUT_MILLIS);
-                                                try {
-                                                    int reply = (int) Await.result(randomPort, Duration.create(AWAIT_DURATION, TimeUnit.SECONDS));
-                                                    return complete(fetchToServer(reply, url, parsedCount).toCompletableFuture().get());
-                                                } catch (Exception e) {
-                                                    return complete(ERROR_MESSAGE + e.toString());
-                                                }
-                                            }
+                                                //Future<Object> randomPort = Patterns.ask(storageActor, new GetRandomPort(Integer.toString(port)), TIMEOUT_MILLIS);
+                                                return Patterns.ask(storageActor, new GetRandomPort(Integer.toString(port)), java.time.Duration.ofMillis(20)).thenCompose(msg -> {
+                                                         fetchToServer((int)msg, url, parsedCount).toCompletableFuture();
+                                            }).thenAccept(r -> HttpResponse.create().withEntity(r.toString()));
                                             try {
                                                 return complete(fetch(url).toCompletableFuture().get());
                                             } catch (InterruptedException | ExecutionException e) {
