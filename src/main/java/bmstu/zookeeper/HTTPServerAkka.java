@@ -123,15 +123,6 @@ public class HTTPServerAkka extends AllDirectives {
 
     }
 
-//        static Children2Callback children2Callback = new Children2Callback() {
-//        @Override
-//        public void processResult(int rc, String path, Object ctx, List<String> children, Stat stat) {
-//            switch (Code.get(rc)){
-//                case OK:
-//                    System.out.println("callbacked");
-//            }
-//        }
-//    };
 
     private static void getServersInfo(List<String> servers, List<String> serversData) {
         for (String s : servers) {
