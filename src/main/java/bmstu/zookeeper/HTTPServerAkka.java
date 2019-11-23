@@ -17,18 +17,13 @@ import akka.stream.javadsl.Flow;
 import org.apache.zookeeper.*;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 import java.util.concurrent.*;
-
-import org.apache.zookeeper.AsyncCallback.Children2Callback;
-import org.apache.zookeeper.data.Stat;
 import scala.concurrent.Await;
 import scala.concurrent.Future;
 import scala.concurrent.duration.Duration;
 
-import static org.apache.zookeeper.KeeperException.*;
 
 public class HTTPServerAkka extends AllDirectives {
     private static int port;
@@ -37,7 +32,7 @@ public class HTTPServerAkka extends AllDirectives {
     private static Http http;
     private static final String ROUTES = "routes";
     private static final String LOCALHOST = "localhost";
-    private static final String SERVER_INFO = "Server online on localhost:8080/\n PRESS ANY KEY TO STOP";
+    private static final String SERVER_INFO = "Server online on localhost:";
     private static final String URL = "url";
     private static final String COUNT = "count";
     private static final String ZOO_KEEPER_HOST = "127.0.0.1:2181";
@@ -68,7 +63,7 @@ public class HTTPServerAkka extends AllDirectives {
                 materializer
         );
 
-        System.out.println(SERVER_INFO);
+        System.out.println(SERVER_INFO + Integer.toString(port));
         System.in.read();
 
         binding
@@ -77,32 +72,19 @@ public class HTTPServerAkka extends AllDirectives {
 
     }
 
-    public static class myWatcher implements Watcher {
+    public static class updWatcher implements Watcher {
 
         @Override
         public void process(WatchedEvent event) {
             List<String> servers = new ArrayList<>();
             try {
-                servers = zoo.getChildren(ZOO_KEEPER_SERVER_DIR, new myWatcher());
+                servers = zoo.getChildren(ZOO_KEEPER_SERVER_DIR, this);
             } catch (KeeperException | InterruptedException e) {
                 e.printStackTrace();
             }
             List<String> serversData = new ArrayList<>();
             getServersInfo(servers, serversData);
             storageActor.tell(new ServerMSG(serversData), ActorRef.noSender());
-            try {
-                TimeUnit.SECONDS.sleep(10);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-
-            try {
-                zoo.getChildren(ZOO_KEEPER_CHILD_DIR, new myWatcher());
-            } catch (KeeperException e) {
-                e.printStackTrace();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
         }
     }
 
@@ -110,16 +92,16 @@ public class HTTPServerAkka extends AllDirectives {
         zoo = new ZooKeeper(
                 ZOO_KEEPER_HOST,
                 TIMEOUT_MILLIS,
-                new myWatcher()
+                new updWatcher()
         );
         zoo.create(
                 ZOO_KEEPER_CHILD_DIR + Integer.toString(port),
                 Integer.toString(port).getBytes(),
                 ZooDefs.Ids.OPEN_ACL_UNSAFE,
-                CreateMode.EPHEMERAL_SEQUENTIAL
+                CreateMode.EPHEMERAL
         );
 
-        zoo.getChildren(ZOO_KEEPER_SERVER_DIR, new myWatcher());
+        zoo.getChildren(ZOO_KEEPER_SERVER_DIR, new updWatcher());
 
     }
 
