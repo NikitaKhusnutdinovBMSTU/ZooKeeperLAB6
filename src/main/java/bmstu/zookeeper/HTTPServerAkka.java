@@ -15,6 +15,7 @@ import akka.pattern.Patterns;
 import akka.stream.ActorMaterializer;
 import akka.stream.javadsl.Flow;
 import org.apache.zookeeper.*;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -145,22 +146,27 @@ public class HTTPServerAkka extends AllDirectives {
                 get(
                         () -> parameter(URL, url ->
                                 parameter(COUNT, count -> {
-                                            int parsedCount = Integer.parseInt(count);
-                                            if (parsedCount != 0) {
-                                                //Future<Object> randomPort = Patterns.ask(storageActor, new GetRandomPort(Integer.toString(port)), TIMEOUT_MILLIS);
-                                                return Patterns.ask(storageActor, new GetRandomPort(Integer.toString(port)), java.time.Duration.ofMillis(20)).thenCompose(msg -> {
-                                                         fetchToServer((int)msg, url, parsedCount).toCompletableFuture();
-                                            }).thenAccept(r -> HttpResponse.create().withEntity(r.toString()));
-                                            try {
-                                                return complete(fetch(url).toCompletableFuture().get());
-                                            } catch (InterruptedException | ExecutionException e) {
-                                                e.printStackTrace();
-                                                return complete(URL_ERROR_MESSAGE);
-                                            }
+                                    int parsedCount = Integer.parseInt(count);
+                                    if (parsedCount != 0) {
+                                        CompletionStage<HttpResponse> response = Patterns.ask(storageActor, new GetRandomPort(Integer.toString(port)), java.time.Duration.ofMillis(5000))
+                                                .thenCompose(req ->
+                                            fetchToServer((int) req, url, parsedCount)
+                                        );
+                                        return completeWithFuture(response);
+                                        try {
+                                            return complete(fetch(url).toCompletableFuture().get());
+                                        } catch (InterruptedException | ExecutionException e) {
+                                            e.printStackTrace();
+                                            return complete(URL_ERROR_MESSAGE);
                                         }
+                                    }
+
+                                }
                                 )
                         )
                 )
         );
+
     }
 }
+
