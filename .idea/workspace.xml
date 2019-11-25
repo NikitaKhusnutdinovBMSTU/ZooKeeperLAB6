@@ -182,7 +182,7 @@
       <select />
     </treeState>
   </component>
-  <component name="ProjectFrameBounds">
+  <component name="ProjectFrameBounds" extendedState="1">
     <option name="x" value="20" />
     <option name="y" value="23" />
     <option name="width" value="1331" />
@@ -251,7 +251,7 @@
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1574498835845" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1574546556150" />
     <property name="extract.method.default.visibility" value="private" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
@@ -359,15 +359,15 @@
       <updated>1574081953557</updated>
       <workItem from="1574081955089" duration="14776000" />
       <workItem from="1574167691424" duration="12370000" />
-      <workItem from="1574249757566" duration="23870000" />
+      <workItem from="1574249757566" duration="24155000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="51016000" />
+    <option name="totallyTimeSpent" value="51301000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="20" y="23" width="1331" height="680" extended-state="0" />
+    <frame x="20" y="23" width="1331" height="680" extended-state="1" />
     <editor active="true" />
     <layout>
       <window_info content_ui="combo" id="Project" order="0" weight="0.24878837" />
