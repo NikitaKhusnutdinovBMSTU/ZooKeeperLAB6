@@ -4,7 +4,6 @@ import akka.actor.AbstractActor;
 import akka.actor.ActorRef;
 import akka.japi.pf.ReceiveBuilder;
 
-
 import java.util.List;
 import java.util.Random;
 
@@ -25,6 +24,7 @@ public class StorageActor extends AbstractActor {
                             Random rand = new Random();
                             int len = serversPortList.size();
                             int rand_idx = rand.nextInt(len);
+                            // POSSIBLY COULD WORK INFINITE TIME (:
                             while (serversPortList.get(rand_idx).equals(msg.getRandomPort())) {
                                 rand_idx = rand.nextInt(len);
                             }

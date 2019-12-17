@@ -15,6 +15,7 @@ import akka.pattern.Patterns;
 import akka.stream.ActorMaterializer;
 import akka.stream.javadsl.Flow;
 import org.apache.zookeeper.*;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -140,9 +141,18 @@ public class HTTPServerAkka extends AllDirectives {
                                 parameter(COUNT, count -> {
                                             int parsedCount = Integer.parseInt(count);
                                             if (parsedCount != 0) {
-                                                CompletionStage<HttpResponse> response = Patterns.ask(storageActor, new GetRandomPort(Integer.toString(port)), java.time.Duration.ofMillis(TIMEOUT_MILLIS))
-                                                        .thenCompose(req ->
-                                                                fetchToServer((int) req, url, parsedCount)
+                                                CompletionStage<HttpResponse> response = Patterns
+                                                        .ask(
+                                                                storageActor,
+                                                                new GetRandomPort(Integer.toString(port)),
+                                                                java.time.Duration.ofMillis(TIMEOUT_MILLIS)
+                                                        )
+                                                        .thenCompose(
+                                                                req -> fetchToServer(
+                                                                        (int) req,
+                                                                        url,
+                                                                        parsedCount
+                                                                )
                                                         );
                                                 return completeWithFuture(response);
                                             }
